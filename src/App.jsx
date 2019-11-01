@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader/root';
-import HelloWorld from './components/hello-world';
+import LoginPagev2 from './components/login-page-v2';
 
 class App extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   render() {
-    return <HelloWorld title="Hello World!" />;
+    return <LoginPagev2 />;
   }
 }
 
