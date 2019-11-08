@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function LoginPagev2() {
+export default function LoginPage() {
   const classes = useStyles();
 
   return (
