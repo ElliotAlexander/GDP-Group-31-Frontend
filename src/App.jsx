@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader/root';
+import { Route, BrowserRouter } from 'react-router-dom';
 import HelloWorld from './components/hello-world';
 
 class App extends Component {
@@ -9,8 +9,12 @@ class App extends Component {
   }
 
   render() {
-    return <HelloWorld title="Hello World!" />;
+    return (
+      <BrowserRouter>
+        <Route path="/" exact render={() => <HelloWorld />} />
+      </BrowserRouter>
+    );
   }
 }
 
-export default hot(App);
+export default App;
