@@ -7,11 +7,23 @@ import Eco from '@material-ui/icons/Eco';
 import Grow from '@material-ui/core/Grow';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import img from './stock-bg-image-1.jpg';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
-      backgroundColor: '#222930',
+      backgroundImage: `url(${img})`,
+      backgroundColor: '#000000',
+      height: '100%',
+      width: '100%',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      margin: '0px',
+      padding: '0px',
+    },
+    html: {
+      height: '100%',
     },
   },
   paper: {
@@ -44,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <Grow in>
-      <Container component="main" maxWidth="xs">
+      <Container className={classes.main} component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
