@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader/root';
-import HelloWorld from './components/hello-world';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Navbar from './components/dashboard/navbar/index.jsx';
+import theme from './theming/theme.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -9,7 +11,11 @@ class App extends Component {
   }
 
   render() {
-    return <HelloWorld title="Hello World!" />;
+    return (
+      <ThemeProvider theme={theme}>
+        <Navbar />;
+      </ThemeProvider>
+    );
   }
 }
 
