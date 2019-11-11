@@ -36,7 +36,9 @@
       "^.+\\.(js|jsx)$": "babel-jest",
       ".+\\.(css|styl|less|sass|scss)$": "<rootDir>/node_modules/jest-css-modules-transform"
     },
-    "setupFilesAfterEnv" : [ "<rootDir>/setupTests.js" ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
+    ],
     "moduleFileExtensions": [
       "css",
       "scss",
@@ -63,7 +65,9 @@
     "prop-types": "15.7.2",
     "react": "16.11.0",
     "react-dom": "16.11.0",
-    "react-hot-loader": "4.12.15"
+    "react-hot-loader": "4.12.15",
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
