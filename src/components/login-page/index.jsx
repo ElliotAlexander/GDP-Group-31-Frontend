@@ -5,11 +5,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Eco from '@material-ui/icons/Eco';
 import Grow from '@material-ui/core/Grow';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import { login } from '../../misc/redux-actions/login';
 import img from './stock-bg-image-1.jpg';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   '@global': {
     body: {
       backgroundImage: `url(${img})`,
@@ -49,49 +52,95 @@ const useStyles = makeStyles(theme => ({
     width: '50%',
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
-export default function LoginPage() {
-  const classes = useStyles();
+class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Grow in>
-      <Container className={classes.main} component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Eco />
-          </Avatar>
-          <form className={classes.form} noValidate>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-            />
-            <Button
-              // type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
+    this.state = {
+      username: '',
+      password: '',
+    };
+
+    this.change = this.change.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  change(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  submit(e) {
+    e.preventDefault();
+    const { username, password } = this.state;
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.login(username, password);
+  }
+
+  render() {
+    const { username, password } = this.state;
+    const { classes } = this.props;
+
+    return (
+      <Grow in>
+        <Container className={classes.main} component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <Eco />
+            </Avatar>
+            <form
+              onSubmit={e => this.submit(e)}
+              className={classes.form}
+              noValidate
             >
-              Sign In
-            </Button>
-          </form>
-        </div>
-      </Container>
-    </Grow>
-  );
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="username"
+                id="username"
+                label="Username"
+                value={username}
+                onChange={e => this.change(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                id="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={e => this.change(e)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+            </form>
+          </div>
+        </Container>
+      </Grow>
+    );
+  }
 }
+
+LoginPage.propTypes = {
+  classes: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+};
+
+export default connect(
+  null,
+  { login },
+)(withStyles(useStyles, { withTheme: true })(LoginPage));
