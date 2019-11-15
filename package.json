@@ -62,7 +62,7 @@
     "@material-ui/icons": "4.5.1",
     "babel-plugin-transform-react-pure-class-to-function": "1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.3",
     "core-js": "3.3.3",
     "lodash": "4.17.15",
     "material-ui": "0.20.2",
@@ -70,8 +70,7 @@
     "react": "16.11.0",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "16.11.0",
-    "react-hot-loader": "4.12.15",
-    "recharts": "^1.8.5"
+    "react-hot-loader": "4.12.15"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
