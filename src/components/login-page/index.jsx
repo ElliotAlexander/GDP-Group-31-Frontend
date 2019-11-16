@@ -9,16 +9,15 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
+// import { red } from '@material-ui/core/colors';
 import { login } from '../../misc/redux-actions/login';
-import img from './stock-bg-image-1.jpg';
+import img from './background-images/stock-bg-image-3.jpg';
 
 const useStyles = theme => ({
   '@global': {
     body: {
       backgroundImage: `url(${img})`,
       backgroundColor: '#000000',
-      height: '100%',
-      width: '100%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
@@ -30,7 +29,7 @@ const useStyles = theme => ({
     },
   },
   paper: {
-    backgroundColor: '#4eb1ba',
+    backgroundColor: '#eceff1', // '#eeeeee',
     marginTop: theme.spacing(25),
     display: 'flex',
     flexDirection: 'column',
@@ -39,10 +38,11 @@ const useStyles = theme => ({
     borderRadius: '10px',
     textAlign: 'center',
     width: '80%',
+    boxShadow: '5px 5px 100px 30px black',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#004d40', // '#546e7a',
   },
   form: {
     width: '80%',
@@ -51,6 +51,11 @@ const useStyles = theme => ({
   submit: {
     width: '50%',
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#004d40', // '#546e7a',
+    '&:hover': {
+      backgroundColor: '#00695c',
+      borderColor: '#004d40',
+    },
   },
 });
 
