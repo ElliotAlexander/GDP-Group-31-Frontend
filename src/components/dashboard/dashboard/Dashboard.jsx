@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { indigo } from '@material-ui/core/colors';
+import DrawerBar from './DrawerBar.jsx';
 import Charts from './Charts.jsx';
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +45,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      <DrawerBar />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <DrawerBar />
+        <Dashboard />
       </ThemeProvider>
     );
   }
