@@ -58,7 +58,7 @@ const useStyles = theme => ({
   },
 });
 
-class LoginPage extends React.Component {
+export class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
