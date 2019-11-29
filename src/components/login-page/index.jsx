@@ -90,7 +90,7 @@ export class LoginPage extends React.Component {
 
     return (
       <Grow in>
-        <Container className={classes.main} component="main" maxWidth="xs">
+        <Container className={classes.main} maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
