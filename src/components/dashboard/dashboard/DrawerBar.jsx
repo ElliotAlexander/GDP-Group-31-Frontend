@@ -115,6 +115,7 @@ export default function DrawerBar() {
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
+            id="icnBtn"
             edge="start"
             color="inherit"
             aria-label="open drawer"
@@ -138,6 +139,7 @@ export default function DrawerBar() {
         </Toolbar>
       </AppBar>
       <Drawer
+        id="drwr"
         variant="permanent"
         classes={{
           paper: clsx(
@@ -159,7 +161,7 @@ export default function DrawerBar() {
           >
             Device List
           </Typography>
-          <IconButton onClick={drawerClose}>
+          <IconButton id="closeBtn" onClick={drawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
