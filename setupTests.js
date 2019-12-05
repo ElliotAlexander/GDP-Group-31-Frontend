@@ -19,6 +19,10 @@ Object.keys(document.defaultView).forEach(property => {
   }
 });
 
+jest.mock('react-chartjs-2', () => ({
+  Pie: () => null,
+}));
+
 global.navigator = {
   userAgent: 'node.js',
 };

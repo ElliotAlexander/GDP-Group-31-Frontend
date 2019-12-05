@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     background: indigo,
   },
   fixedHeight: {
-    height: 400,
+    height: 600,
   },
 }));
 

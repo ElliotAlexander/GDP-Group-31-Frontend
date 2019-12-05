@@ -4,7 +4,6 @@ import { hot } from 'react-hot-loader/root';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Dashboard from './components/dashboard/dashboard/Dashboard.jsx';
 import theme from './theming/theme.jsx';
-import DrawerBar from './components/dashboard/dashboard/DrawerBar.jsx';
 
 class App extends Component {
   constructor(props) {
