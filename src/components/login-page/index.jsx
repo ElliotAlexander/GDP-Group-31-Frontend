@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { login } from '../../misc/redux-actions/login';
 import img from './background-images/stock-bg-image-3.jpg';
 
-const useStyles = theme => ({
+export const useStyles = theme => ({
   '@global': {
     body: {
       backgroundImage: `url(${img})`,
@@ -41,7 +41,7 @@ const useStyles = theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: '#004d40', // '#546e7a',
+    backgroundColor: '#004d40',
   },
   form: {
     width: '80%',
@@ -50,7 +50,7 @@ const useStyles = theme => ({
   submit: {
     width: '50%',
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: '#004d40', // '#546e7a',
+    backgroundColor: '#004d40',
     '&:hover': {
       backgroundColor: '#00695c',
       borderColor: '#004d40',
@@ -93,7 +93,7 @@ class LoginPage extends React.Component {
         <Container maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
+            <Avatar id="avatar" className={classes.avatar}>
               <Eco />
             </Avatar>
             <form
@@ -123,6 +123,7 @@ class LoginPage extends React.Component {
                 onChange={e => this.change(e)}
               />
               <Button
+                id="submit"
                 type="submit"
                 fullWidth
                 variant="contained"
