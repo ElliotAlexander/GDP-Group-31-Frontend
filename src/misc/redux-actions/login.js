@@ -1,4 +1,4 @@
-import { userService } from './user-service';
+import { userService } from '../user-service';
 import { alertActions } from './alert-actions';
 import { history } from '../helpers/history';
 import { userConstants } from '../constants/user-constants';
@@ -22,7 +22,7 @@ export function login(username, password) {
   return dispatch => {
     dispatch(request({ username }));
 
-    userService.login(username, password).then(
+    return userService.login(username, password).then(
       user => {
         dispatch(success(user));
         history.push('/');
