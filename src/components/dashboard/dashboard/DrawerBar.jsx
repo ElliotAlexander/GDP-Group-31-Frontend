@@ -1,11 +1,13 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { indigo } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import List from '@material-ui/core/List';
@@ -16,7 +18,7 @@ import { listOfItems } from './listItems.jsx';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = theme => ({
   root: {
     display: 'flex',
   },
@@ -94,80 +96,96 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 400,
   },
-}));
+});
 
-export default function DrawerBar() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const drawerOpen = () => {
-    setOpen(true);
-  };
-  const drawerClose = () => {
-    setOpen(false);
+class DrawerBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { open: false };
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+  }
+
+  toggleDrawer = () => {
+    this.setState(prevState => {
+      return { open: !prevState.open };
+    });
   };
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            id="icnBtn"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={drawerOpen}
-            className={clsx(
-              classes.menuButton,
-              open && classes.menuButtonHidden,
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        id="drwr"
-        variant="permanent"
-        classes={{
-          paper: clsx(
-            classes.drawerPaper,
-            classes.paper,
-            !open && classes.drawerPaperClose,
-          ),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="primary"
-            align="center"
-            noWrap
-            className={classes.title}
-          >
-            Device List
-          </Typography>
-          <IconButton id="closeBtn" onClick={drawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{listOfItems}</List>
-      </Drawer>
-    </div>
-  );
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="absolute"
+          className={clsx(
+            classes.appBar,
+            this.state.open && classes.appBarShift,
+          )}
+        >
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              id="icnBtn"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.toggleDrawer}
+              className={clsx(
+                classes.menuButton,
+                this.state.open && classes.menuButtonHidden,
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              id="dashboardName"
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              Dashboard
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          id="drwr"
+          variant="permanent"
+          classes={{
+            paper: clsx(
+              classes.drawerPaper,
+              classes.paper,
+              !this.state.open && classes.drawerPaperClose,
+            ),
+          }}
+          // eslint-disable-next-line react/destructuring-assignment
+          open={this.state.open}
+        >
+          <div className={classes.toolbarIcon}>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="primary"
+              align="center"
+              noWrap
+              className={classes.title}
+            >
+              Device List
+            </Typography>
+            <IconButton id="closeBtn" onClick={this.toggleDrawer} hidden="0">
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>{listOfItems}</List>
+        </Drawer>
+      </div>
+    );
+  }
 }
+DrawerBar.propTypes = {
+  classes: PropTypes.func.isRequired,
+};
+export default withStyles(useStyles)(DrawerBar);
