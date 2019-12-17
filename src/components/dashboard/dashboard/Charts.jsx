@@ -13,7 +13,6 @@ const data = {
   ],
 };
 
-// eslint-disable-next-line react/no-deprecated
 export default function Charts() {
   return (
     <div>
