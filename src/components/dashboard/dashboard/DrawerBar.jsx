@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { indigo } from '@material-ui/core/colors';
@@ -113,16 +112,14 @@ class DrawerBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { open } = this.state;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
           position="absolute"
-          className={clsx(
-            classes.appBar,
-            this.state.open && classes.appBarShift,
-          )}
+          className={clsx(classes.appBar, open && classes.appBarShift)}
         >
           <Toolbar className={classes.toolbar}>
             <IconButton
@@ -133,7 +130,7 @@ class DrawerBar extends React.Component {
               onClick={this.toggleDrawer}
               className={clsx(
                 classes.menuButton,
-                this.state.open && classes.menuButtonHidden,
+                open && classes.menuButtonHidden,
               )}
             >
               <MenuIcon />
@@ -157,11 +154,10 @@ class DrawerBar extends React.Component {
             paper: clsx(
               classes.drawerPaper,
               classes.paper,
-              !this.state.open && classes.drawerPaperClose,
+              !open && classes.drawerPaperClose,
             ),
           }}
-          // eslint-disable-next-line react/destructuring-assignment
-          open={this.state.open}
+          open={open}
         >
           <div className={classes.toolbarIcon}>
             <Typography
