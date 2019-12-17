@@ -4,6 +4,8 @@ import { hot } from 'react-hot-loader/root';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Dashboard from './components/dashboard/dashboard/Dashboard.jsx';
 import theme from './theming/theme.jsx';
+import { Route, BrowserRouter } from 'react-router-dom';
+import LoginPage from './components/login-page';
 
 class App extends Component {
   constructor(props) {
@@ -13,11 +15,16 @@ class App extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <Dashboard />
-      </ThemeProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <div>
+            <Route path="/" exact render={() => <Dashboard />} />
+            <Route path="/login" render={() => <LoginPage />} />
+          </div>
+        </ThemeProvider>
+      </BrowserRouter>
     );
   }
 }
 
-export default hot(App);
+export default App;
