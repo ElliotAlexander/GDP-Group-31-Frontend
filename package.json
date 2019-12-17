@@ -7,6 +7,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --open",
     "build": "cross-env NODE_ENV=production webpack",
     "format": "prettier --write 'packages/**/*.js'",
+    "lint" : "prettier --check 'src/**/*.{js,jsx,scss,css,md}'",
     "test:watch": "jest --watchAll --coverage",
     "test": "jest"
   },
