@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-// eslint-disable-next-line import/no-duplicates
 import DrawerBar from 'components/dashboard/dashboard/DrawerBar.jsx';
-// eslint-disable-next-line import/no-duplicates
 
 describe('DrawerBar Testing', () => {
   it('renders without crashing', () => {
@@ -53,15 +51,14 @@ describe('typography', () => {
 describe('button labelling', () => {
   it("'check aria label'", () => {
     const wrapper = mount(<DrawerBar />);
-    // eslint-disable-next-line jest/valid-expect
     setTimeout(() => {
       expect(
         wrapper
           .find('[aria-label="open drawer"]')
           .text()
           .equals('open drawer'),
-        // eslint-disable-next-line jest/valid-expect
-      ).to.equal(true);
+        // test
+      ).toBe(true);
     });
   });
 });
