@@ -26,11 +26,11 @@ class HomePanelGrid extends React.Component {
         { i: 'b', x: 2, y: 0, w: 2, h: 2, static: false },
         { i: 'c', x: 4, y: 0, w: 2, h: 2, static: false },
 
-        { i: 'd', x: 0, y: 1, w: 3, h: 4, static: false },
-        { i: 'e', x: 3, y: 1, w: 3, h: 4, static: false },
+        { i: 'd', x: 0, y: 1, w: 3, h: 6, static: false },
+        { i: 'e', x: 3, y: 1, w: 3, h: 6, static: false },
 
-        { i: 'f', x: 0, y: 2, w: 4, h: 4, static: false },
-        { i: 'g', x: 4, y: 2, w: 2, h: 4, static: false },
+        { i: 'f', x: 0, y: 2, w: 4, h: 3, static: false },
+        { i: 'g', x: 4, y: 2, w: 2, h: 3, static: false },
       ],
     };
     return (
@@ -52,16 +52,16 @@ class HomePanelGrid extends React.Component {
           c
         </div>
         <div className={classes.b} key="d">
-          d
+          Data in/out graph
         </div>
         <div className={classes.b} key="e">
-          e
+          World Map
         </div>
         <div className={classes.c} key="f">
-          f
+          Device Info Table
         </div>
         <div className={classes.c} key="g">
-          g
+          Security Rating Timeline
         </div>
       </ResponsiveGridLayout>
     );
