@@ -7,46 +7,61 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const useStyles = () => ({
   a: {
-    backgroundColor: 'red',
+    backgroundColor: 'lightgray',
   },
   b: {
-    backgroundColor: 'green',
+    backgroundColor: 'pink',
   },
   c: {
-    backgroundColor: 'blue',
+    backgroundColor: 'lightblue',
   },
 });
 
 class HomePanelGrid extends React.Component {
   render() {
     const { classes } = this.props;
-    // layout is an array of objects, see the demo for more complete usage
-    const layout = [
-      { i: 'a', x: 0, y: 0, w: 1, h: 2, static: true },
-      { i: 'b', x: 1, y: 0, w: 1, h: 2, static: true },
-      { i: 'c', x: 2, y: 0, w: 1, h: 2, static: true },
-      { i: 'd', x: 3, y: 0, w: 1, h: 2, static: true },
-    ];
+    const layouts = {
+      lg: [
+        { i: 'a', x: 0, y: 0, w: 2, h: 2, static: false },
+        { i: 'b', x: 2, y: 0, w: 2, h: 2, static: false },
+        { i: 'c', x: 4, y: 0, w: 2, h: 2, static: false },
+
+        { i: 'd', x: 0, y: 1, w: 3, h: 4, static: false },
+        { i: 'e', x: 3, y: 1, w: 3, h: 4, static: false },
+
+        { i: 'f', x: 0, y: 2, w: 4, h: 4, static: false },
+        { i: 'g', x: 4, y: 2, w: 2, h: 4, static: false },
+      ],
+    };
     return (
       <ResponsiveGridLayout
         className="layout"
-        layout={layout}
+        layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 3, md: 3, sm: 3, xs: 1, xxs: 1 }}
-        rowHeight={120}
+        cols={{ lg: 6, md: 6, sm: 6, xs: 1, xxs: 1 }}
+        rowHeight={50}
         width={1400}
       >
         <div className={classes.a} key="a">
           a
         </div>
-        <div className={classes.b} key="b">
+        <div className={classes.a} key="b">
           b
         </div>
-        <div className={classes.c} key="c">
+        <div className={classes.a} key="c">
           c
         </div>
-        <div className={classes.c} key="d">
+        <div className={classes.b} key="d">
           d
+        </div>
+        <div className={classes.b} key="e">
+          e
+        </div>
+        <div className={classes.c} key="f">
+          f
+        </div>
+        <div className={classes.c} key="g">
+          g
         </div>
       </ResponsiveGridLayout>
     );
