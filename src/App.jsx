@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader/root';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { Route, BrowserRouter } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard/Dashboard.jsx';
 import theme from './theming/theme.jsx';
-import { Route, BrowserRouter } from 'react-router-dom';
 import LoginPage from './components/login-page';
 
 class App extends Component {
