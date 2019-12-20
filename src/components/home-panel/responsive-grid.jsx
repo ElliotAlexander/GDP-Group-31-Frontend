@@ -22,15 +22,15 @@ class HomePanelGrid extends React.Component {
     const { classes } = this.props;
     const layouts = {
       lg: [
-        { i: 'a', x: 0, y: 0, w: 2, h: 2, static: false },
-        { i: 'b', x: 2, y: 0, w: 2, h: 2, static: false },
-        { i: 'c', x: 4, y: 0, w: 2, h: 2, static: false },
+        { i: 'a', x: 0, y: 0, w: 2, h: 2, static: true },
+        { i: 'b', x: 2, y: 0, w: 2, h: 2, static: true },
+        { i: 'c', x: 4, y: 0, w: 2, h: 2, static: true },
 
-        { i: 'd', x: 0, y: 1, w: 3, h: 6, static: false },
-        { i: 'e', x: 3, y: 1, w: 3, h: 6, static: false },
+        { i: 'd', x: 0, y: 2, w: 3, h: 6, static: true },
+        { i: 'e', x: 3, y: 2, w: 3, h: 6, static: true },
 
-        { i: 'f', x: 0, y: 2, w: 4, h: 3, static: false },
-        { i: 'g', x: 4, y: 2, w: 2, h: 3, static: false },
+        { i: 'f', x: 0, y: 8, w: 4, h: 3, static: true },
+        { i: 'g', x: 4, y: 8, w: 2, h: 3, static: true },
       ],
     };
     return (
