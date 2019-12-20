@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePanelGrid from './responsive-grid';
+import HomePanelGrid from './home-panel-grid';
 
 class HomePanel extends React.Component {
   render() {
