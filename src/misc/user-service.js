@@ -3,6 +3,18 @@ function logout() {
   localStorage.removeItem('user');
 }
 
+function authHeader() {
+  // return authorization header with jwt token
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // but is this safe ??
+  if (user && user.token) {
+    return { Authorization: 'Token ' + user.token };
+  }
+
+  return {};
+}
+
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -39,7 +51,29 @@ function login(username, password) {
     });
 }
 
+function resetPassword(username, newPassword) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, newPassword }),
+  };
+
+  return fetch('/resetPassword', requestOptions).then(handleResponse);
+}
+
+function checkPasswordFlag() {
+  const requestOptions = {
+    method: 'GET',
+    headers: authHeader(),
+  };
+
+  // will lead to returning true or false
+  return fetch('/checkPasswordFlag', requestOptions).then(handleResponse);
+}
+
 export const userService = {
   login,
   logout,
+  resetPassword,
+  checkPasswordFlag,
 };

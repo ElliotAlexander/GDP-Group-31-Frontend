@@ -25,11 +25,18 @@ export function login(username, password) {
     return userService.login(username, password).then(
       user => {
         dispatch(success(user));
-        history.push('/');
+
+        // check if password needs resetting
+        if (userService.checkPasswordFlag()) {
+          history.push('/'); // go to dashboard if flag is true
+        } else {
+          history.push('/login'); // go to login if flag is false and reset password
+        }
       },
       error => {
         dispatch(failure(error.toString()));
         dispatch(alertActions.error(error.toString()));
+        return 'ERR';
       },
     );
   };

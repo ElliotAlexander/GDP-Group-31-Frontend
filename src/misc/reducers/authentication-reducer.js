@@ -19,6 +19,18 @@ export function authentication(state = initialState, action) {
       return {};
     case userConstants.LOGOUT:
       return {};
+    case userConstants.RESET_PASS_REQUEST:
+      return {
+        loggedIn: false,
+        user: action.user,
+      };
+    case userConstants.RESET_PASS_SUCCESS:
+      return {
+        loggedIn: false,
+        user: action.user,
+      };
+    case userConstants.RESET_PASS_FAILURE:
+      return {};
     default:
       return state;
   }
