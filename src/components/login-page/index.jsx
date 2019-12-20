@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { login } from '../../misc/redux-actions/login';
 import { resetPassword } from '../../misc/redux-actions/resetPassword';
 import img from './background-images/stock-bg-image-3.jpg';
+import ResetPasswordPanel from '../reset-password-panel/index';
 
 export const useStyles = theme => ({
   '@global': {
@@ -68,14 +69,11 @@ class LoginPage extends React.Component {
       username: '',
       password: '',
       opened: true,
-      passwordNew1: '',
-      passwordNew2: '',
     };
 
     this.change = this.change.bind(this);
     this.submit = this.submit.bind(this);
     this.togglePanel = this.togglePanel.bind(this);
-    this.reset = this.reset.bind(this);
   }
 
   togglePanel() {
@@ -103,28 +101,8 @@ class LoginPage extends React.Component {
     });
   }
 
-  reset(e) {
-    e.preventDefault();
-    const { username, passwordNew1, passwordNew2 } = this.state;
-
-    // rather link this to disable the button if they are not the same - chech material ui
-    if (passwordNew1 === passwordNew2) {
-      // eslint-disable-next-line react/destructuring-assignment
-      this.props.resetPassword(username, passwordNew1);
-    } else {
-      // TODO
-      console.log('add alert for no match passwords ' + username);
-    }
-  }
-
   render() {
-    const {
-      username,
-      password,
-      opened,
-      passwordNew1,
-      passwordNew2,
-    } = this.state;
+    const { username, password, opened } = this.state;
 
     const { classes } = this.props;
 
@@ -172,40 +150,7 @@ class LoginPage extends React.Component {
               </form>
             </Collapse>
             <Collapse in={!opened} className={classes.form}>
-              <form onSubmit={e => this.reset(e)} noValidate>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="passwordNew1"
-                  id="passwordNew1"
-                  label="New Password"
-                  type="password"
-                  value={passwordNew1}
-                  onChange={e => this.change(e)}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="passwordNew2"
-                  id="passwordNew2"
-                  label="New Password"
-                  type="password"
-                  value={passwordNew2}
-                  onChange={e => this.change(e)}
-                />
-                <Button
-                  id="reset"
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Reset
-                </Button>
-              </form>
+              <ResetPasswordPanel username={username} />
             </Collapse>
           </div>
         </Container>
@@ -217,7 +162,6 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   classes: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  resetPassword: PropTypes.func.isRequired,
 };
 
 export const LoginPageWithStyles = withStyles(useStyles)(LoginPage);

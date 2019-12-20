@@ -4,17 +4,14 @@ import { history } from '../helpers/history';
 import { userConstants } from '../constants/user-constants';
 
 export function login(username, password) {
-  // eslint-disable-next-line no-unused-vars
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user };
   }
 
-  // eslint-disable-next-line no-unused-vars
   function success(user) {
     return { type: userConstants.LOGIN_SUCCESS, user };
   }
 
-  // eslint-disable-next-line no-unused-vars
   function failure(error) {
     return { type: userConstants.LOGIN_FAILURE, error };
   }
@@ -27,10 +24,10 @@ export function login(username, password) {
         dispatch(success(user));
 
         // check if password needs resetting
-        if (userService.checkPasswordFlag()) {
-          history.push('/'); // go to dashboard if flag is true
+        if (!userService.checkPasswordFlag()) {
+          history.push('/'); // go to dashboard if flag is false
         } else {
-          history.push('/login'); // go to login if flag is false and reset password
+          history.push('/login'); // go to login to reset password
         }
       },
       error => {
