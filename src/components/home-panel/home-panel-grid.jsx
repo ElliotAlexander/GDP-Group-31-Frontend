@@ -2,6 +2,7 @@ import React from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import SummaryPanel from './summary-panel/index';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -22,9 +23,9 @@ class HomePanelGrid extends React.Component {
     const { classes } = this.props;
     const layouts = {
       lg: [
-        { i: 'a', x: 0, y: 0, w: 2, h: 2, static: true },
-        { i: 'b', x: 2, y: 0, w: 2, h: 2, static: true },
-        { i: 'c', x: 4, y: 0, w: 2, h: 2, static: true },
+        { i: 'a', x: 0, y: 0, w: 6, h: 2, static: true },
+        // { i: 'b', x: 2, y: 0, w: 2, h: 2, static: true },
+        // { i: 'c', x: 4, y: 0, w: 2, h: 2, static: true },
 
         { i: 'd', x: 0, y: 2, w: 3, h: 6, static: true },
         { i: 'e', x: 3, y: 2, w: 3, h: 6, static: true },
@@ -43,14 +44,14 @@ class HomePanelGrid extends React.Component {
         width={1400}
       >
         <div className={classes.a} key="a">
-          a
+          <SummaryPanel />
         </div>
-        <div className={classes.a} key="b">
-          b
+        {/* <div className={classes.a} key="b">
+          100/500
         </div>
         <div className={classes.a} key="c">
-          c
-        </div>
+          Number of devices
+        </div> */}
         <div className={classes.b} key="d">
           Data in/out graph
         </div>
