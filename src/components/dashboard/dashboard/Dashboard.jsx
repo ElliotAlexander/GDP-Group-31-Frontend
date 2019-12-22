@@ -1,13 +1,9 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { indigo } from '@material-ui/core/colors';
+import HomePanel from '../../home-panel/index';
 import DrawerBar from './DrawerBar.jsx';
-import Charts from './Charts.jsx';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,24 +36,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <DrawerBar />
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Charts />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
+        <HomePanel />
       </main>
     </div>
   );
