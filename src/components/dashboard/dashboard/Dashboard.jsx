@@ -2,15 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { indigo } from '@material-ui/core/colors';
-
 import HomePanel from '../../home-panel/index';
-
-import DrawerBar from './DrawerBar.jsx';
+import DrawerBar from './DrawerBar/DrawerBar';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
   title: {
     flexGrow: 1,
   },
@@ -42,10 +37,11 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <DrawerBar />
-      <main className={classes.content}>
-        <HomePanel />
-      </main>
+      <DrawerBar>
+        <main className={classes.content}>
+          <HomePanel />
+        </main>
+      </DrawerBar>
     </div>
   );
 }

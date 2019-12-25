@@ -25,11 +25,9 @@ class App extends Component {
         <ApolloHooksProvider client={client}>
           <BrowserRouter>
             <ThemeProvider theme={theme}>
-              <div>
-                <Route path="/" exact render={() => <Dashboard />} />
-                <Route path="/login" render={() => <LoginPage />} />
-                <Route path="/device" render={() => <DeviceDashboard />} />
-              </div>
+              <Route path="/" exact render={() => <Dashboard />} />
+              <Route path="/login" render={() => <LoginPage />} />
+              <Route path="/device" render={() => <DeviceDashboard />} />
             </ThemeProvider>
           </BrowserRouter>
         </ApolloHooksProvider>

@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { indigo } from '@material-ui/core/colors';
-import DevicePanel from '../device-panel/index';
-import DrawerBar from './DrawerBar.jsx';
+import DevicePanel from '../device-panel/index.jsx';
+import DrawerBar from './DrawerBar/DrawerBar.jsx';
 
 const useStyles = makeStyles(theme => ({
   root: {
