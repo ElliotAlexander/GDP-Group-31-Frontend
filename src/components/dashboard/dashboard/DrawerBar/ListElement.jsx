@@ -72,9 +72,14 @@ export default function ListElement(props) {
         <div className={classes.elementRoot}>
           <div className={classes.inlineIconContainer}>
             <LaptopMacSharpIcon className={classes.listIcon} />
-            <h4 className={classes.listElementText} style={{ width: '150px' }}>
-              {device.devices.deviceHostname}
-            </h4>
+            <Tooltip title={device.devices.deviceHostname}>
+              <h4
+                className={classes.listElementText}
+                style={{ width: '150px' }}
+              >
+                {device.devices.deviceHostname}
+              </h4>
+            </Tooltip>
           </div>
           <ul className={classes.navElem}>
             <li className={classes.listElem}>
