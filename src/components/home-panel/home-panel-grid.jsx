@@ -2,6 +2,7 @@ import React from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import DevicesInfoTable from './devices-info-table';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -58,7 +59,7 @@ class HomePanelGrid extends React.Component {
           World Map
         </div>
         <div className={classes.c} key="f">
-          Device Info Table
+          <DevicesInfoTable />
         </div>
         <div className={classes.c} key="g">
           Security Rating Timeline
