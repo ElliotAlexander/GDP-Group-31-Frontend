@@ -1,6 +1,9 @@
 import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -69,10 +72,34 @@ const useStyles = makeStyles({
   red: {
     color: 'red',
   },
+  load: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
 });
+
+const DEVICE_LIST_QUERY = gql`
+  {
+    allDevices {
+      nodes {
+        macAddr
+        deviceNickname
+        deviceHostname
+        internalIpV4
+        internalIpV6
+        lastSeen
+        deviceType
+        uuid
+      }
+    }
+  }
+`;
 
 export default function DevicesInfoTable() {
   const classes = useStyles();
+  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
 
   const setRating = rating => {
     if (rating > 0 && rating < 3) {
@@ -89,6 +116,9 @@ export default function DevicesInfoTable() {
 
     return <FiberManualRecordIcon className={classes.red} fontSize="small" />;
   };
+
+  if (loading) return <CircularProgress className={classes.load} />;
+  if (error) return <p className={classes.load}>Error :(</p>;
 
   return (
     <Paper>
@@ -109,7 +139,7 @@ export default function DevicesInfoTable() {
           </TableHead>
           <TableBody>
             {rows.map(row => (
-              <TableRow key={row.name}>
+              <TableRow key={data.allDevices.nodes.deviceNickname}>
                 <StyledTableCell>{row.name}</StyledTableCell>
                 <StyledTableCell>{row.ip}</StyledTableCell>
                 <StyledTableCell>
