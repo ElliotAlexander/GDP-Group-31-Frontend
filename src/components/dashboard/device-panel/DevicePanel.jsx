@@ -4,17 +4,27 @@ import PropTypes from 'prop-types';
 import DeviceGrid from './DeviceGrid';
 
 class DevicePanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      uuid: '',
+    };
+  }
+
   componentDidMount() {
     const { location } = this.props;
     const values = queryString.parse(location.search);
-    console.log(values.device); // "top"
+    this.setState({
+      uuid: values.device,
+    });
   }
 
   render() {
+    const { uuid } = this.state;
     return (
       <div>
         <h1> Pad </h1>
-        <DeviceGrid />
+        <DeviceGrid uuid={uuid} />
       </div>
     );
   }

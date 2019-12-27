@@ -1,4 +1,4 @@
-export const userConstants = {
+export const uuidConstants = {
   SET: 'SET',
   GET: 'GET',
   CLEAR: 'CLEAR',

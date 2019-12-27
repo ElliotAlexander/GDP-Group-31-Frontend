@@ -2,8 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { indigo } from '@material-ui/core/colors';
-import DevicePanel from '../device-panel/index.jsx';
-import DrawerBar from './DrawerBar/DrawerBar.jsx';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import DevicePanel from '../device-panel/DevicePanel.jsx';
+import DrawerBar from '../DrawerBar/DrawerBar.jsx';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,16 +36,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DeviceDashboard() {
+function DeviceDashboard(props) {
   const classes = useStyles();
+  const { location } = props;
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <DrawerBar />
       <main className={classes.content}>
-        <DevicePanel />
+        <DevicePanel location={location} />
       </main>
     </div>
   );
 }
+
+DeviceDashboard.propTypes = {
+  location: PropTypes.shape({}).isRequired,
+};
+
+export default withRouter(DeviceDashboard);

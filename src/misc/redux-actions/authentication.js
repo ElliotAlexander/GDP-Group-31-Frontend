@@ -1,7 +1,7 @@
 import { userService } from '../user-service';
 import { alertActions } from './alert-actions';
 import { history } from '../helpers/history';
-import { userConstants } from '../constants/user-constants';
+import { userConstants } from '../constants/authentication-constants';
 
 export function login(username, password) {
   // eslint-disable-next-line no-unused-vars

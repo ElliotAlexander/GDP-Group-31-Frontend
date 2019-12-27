@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { login } from '../../misc/redux-actions/login';
+import { login } from '../../misc/redux-actions/authentication';
 import img from './background-images/stock-bg-image-3.jpg';
 
 export const useStyles = theme => ({

@@ -19,7 +19,10 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 
+import { connect } from 'react-redux';
 import ListElement from './ListElement';
+
+import { setUUID } from '../../../misc/redux-actions/uuid-actions';
 
 export const drawerWidth = 240;
 
@@ -104,9 +107,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DrawerBar(props) {
+function mapStateToProps(state) {
+  return {
+    uuid: state.uuid,
+  };
+}
+
+function DrawerBar(props) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, dispatch } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
   const [open, setOpen] = React.useState(true);
 
@@ -177,7 +186,11 @@ export default function DrawerBar(props) {
         <List className={classes.deviceList}>
           {data.allDevices.nodes.map(device => (
             <div className={classes.listElement} key={device.uuid}>
-              <ListElement drawerWidth={drawerWidth} devices={device} />
+              <ListElement
+                drawerWidth={drawerWidth}
+                devices={device}
+                action={dispatch(setUUID(device.uuid))}
+              />
             </div>
           ))}
         </List>
@@ -189,4 +202,7 @@ export default function DrawerBar(props) {
 
 DrawerBar.propTypes = {
   children: PropTypes.shape({}),
+  dispatch: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps)(DrawerBar);
