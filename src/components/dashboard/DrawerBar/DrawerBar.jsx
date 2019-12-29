@@ -22,7 +22,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { connect } from 'react-redux';
 import ListElement from './ListElement';
 
-import { setUUID } from '../../../misc/redux-actions/uuid-actions';
+import { setDevice } from '../../../misc/redux-actions/device-actions';
 
 export const drawerWidth = 240;
 
@@ -109,7 +109,7 @@ const useStyles = makeStyles(theme => ({
 
 function mapStateToProps(state) {
   return {
-    uuid: state.uuid,
+    device: state.device,
   };
 }
 
@@ -189,7 +189,9 @@ function DrawerBar(props) {
               <ListElement
                 drawerWidth={drawerWidth}
                 devices={device}
-                action={dispatch(setUUID(device.uuid))}
+                action={() => {
+                  dispatch(setDevice(device));
+                }}
               />
             </div>
           ))}

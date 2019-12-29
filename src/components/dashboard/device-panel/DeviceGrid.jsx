@@ -3,6 +3,8 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import UpDownDataComponent from './components/DataUpDown';
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const useStyles = () => ({
@@ -19,7 +21,7 @@ const useStyles = () => ({
 
 class DeviceGrid extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, device } = this.props;
     const dimensions = {
       lg: [
         { i: 'up-down', x: 0, y: 0, w: 1, h: 2, static: true },
@@ -45,10 +47,10 @@ class DeviceGrid extends React.Component {
         width={1200}
       >
         <div className={classes.toprow} key="up-down">
-          Up-Down Data
+          <UpDownDataComponent device={device} />
         </div>
         <div className={classes.toprow} key="data">
-          Total Data
+          Selected Device: {device.uuid}
         </div>
         <div className={classes.toprow} key="ip-count">
           IPs Connected
@@ -78,6 +80,9 @@ class DeviceGrid extends React.Component {
 
 DeviceGrid.propTypes = {
   classes: PropTypes.func.isRequired,
+  device: PropTypes.shape({
+    uuid: PropTypes.string,
+  }),
 };
 
 export default withStyles(useStyles)(DeviceGrid);

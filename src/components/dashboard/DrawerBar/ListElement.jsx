@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import ListItem from '@material-ui/core/ListItem';
@@ -59,15 +60,16 @@ const deviceMacAdddressText =
   'Device Mac address. All network devices are identified by a manufacturer assigned MAC address, unique to every device. We use this to track each device.';
 
 export default function ListElement(props) {
-  const { drawerWidth, ...device } = props;
+  const { drawerWidth, action, ...device } = props;
   const classes = useStyles();
 
   return (
-    <div>
+    <Link style={{ textDecoration: 'none', color: 'black' }} to="/device">
       <ListItem
         button
         key={device.devices.deviceHostname}
         className={classes.listElement}
+        onClick={action}
       >
         <div className={classes.elementRoot}>
           <div className={classes.inlineIconContainer}>
@@ -95,11 +97,12 @@ export default function ListElement(props) {
           </ul>
         </div>
       </ListItem>
-    </div>
+    </Link>
   );
 }
 
 ListElement.propTypes = {
   drawerWidth: PropTypes.number,
   device: PropTypes.shape({}),
+  action: PropTypes.func,
 };

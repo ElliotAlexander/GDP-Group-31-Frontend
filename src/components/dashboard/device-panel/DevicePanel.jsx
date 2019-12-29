@@ -1,39 +1,35 @@
 import React from 'react';
-import queryString from 'query-string';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 import DeviceGrid from './DeviceGrid';
 
+function mapStateToProps(state) {
+  return {
+    device: state.device,
+  };
+}
+
 class DevicePanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      uuid: '',
-    };
-  }
-
-  componentDidMount() {
-    const { location } = this.props;
-    const values = queryString.parse(location.search);
-    this.setState({
-      uuid: values.device,
-    });
-  }
-
   render() {
-    const { uuid } = this.state;
+    const { device } = this.props;
+    const deviceObj = device.device;
+    if (!deviceObj) return <Redirect to="/" />;
+
     return (
       <div>
         <h1> Pad </h1>
-        <DeviceGrid uuid={uuid} />
+        <DeviceGrid device={deviceObj} />
       </div>
     );
   }
 }
 
 DevicePanel.propTypes = {
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
+  device: PropTypes.shape({
+    device: PropTypes.object,
   }).isRequired,
 };
 
-export default DevicePanel;
+export default connect(mapStateToProps)(DevicePanel);
