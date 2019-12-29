@@ -3,14 +3,12 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import UpDownDataComponent from './components/DataUpDown';
+import DeviceIPAddress from './components/DeviceIPAddress';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const useStyles = () => ({
-  toprow: {
-    backgroundColor: 'lightgreen',
-  },
+  toprow: {},
   middlerow: {
     backgroundColor: 'lightblue',
   },
@@ -47,7 +45,7 @@ class DeviceGrid extends React.Component {
         width={1200}
       >
         <div className={classes.toprow} key="up-down">
-          <UpDownDataComponent device={device} />
+          <DeviceIPAddress device={device} />
         </div>
         <div className={classes.toprow} key="data">
           Selected Device: {device.uuid}
