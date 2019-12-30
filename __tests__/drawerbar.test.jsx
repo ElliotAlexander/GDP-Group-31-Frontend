@@ -1,32 +1,32 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import DrawerBar from 'components/dashboard/dashboard/DrawerBar.jsx';
+import { shallow } from 'enzyme';
+import DrawerBar from 'components/dashboard/drawer-bar/DrawerBar.jsx';
+import configureStore from 'redux-mock-store';
+
+const middlewares = [];
+const mockStore = configureStore(middlewares);
+const initialState = {};
+const store = mockStore(initialState);
 
 describe('DrawerBar Testing', () => {
   it('renders without crashing', () => {
-    shallow(<DrawerBar />);
+    shallow(<DrawerBar store={store} />).dive();
   });
 });
 
 describe('button testing', () => {
-  const wrapper = mount(<DrawerBar />);
-  it('button should render', () => {
-    const icnButton1 = wrapper.find('#closeBtn');
-    const icnButton2 = wrapper.find('#icnBtn');
-    expect(icnButton1.exists()).toEqual(true);
-    expect(icnButton2.exists()).toEqual(true);
-  });
+  const wrapper = shallow(<DrawerBar store={store} />).dive();
 
   it('renders a button', () => {
     setTimeout(() => {
-      expect(wrapper.find('#icnBtn')).toHaveLength(1);
+      expect(wrapper.find('#closeBtn')).toHaveLength(1);
     });
   });
 });
 
 describe('drawerbar function calls', () => {
   it('button click', () => {
-    let wrapper = mount(<DrawerBar />);
+    let wrapper = shallow(<DrawerBar store={store} />).dive();
     setTimeout(() => {
       wrapper = wrapper.find('#closeBtn').simulate('click');
       setTimeout(() => {
@@ -37,7 +37,7 @@ describe('drawerbar function calls', () => {
 });
 
 describe('typography', () => {
-  const wrapper = mount(<DrawerBar />);
+  const wrapper = shallow(<DrawerBar store={store} />).dive();
   it('typography', () => {
     setTimeout(() => {
       wrapper
@@ -50,7 +50,7 @@ describe('typography', () => {
 
 describe('button labelling', () => {
   it("'check aria label'", () => {
-    const wrapper = mount(<DrawerBar />);
+    const wrapper = shallow(<DrawerBar store={store} />).dive();
     setTimeout(() => {
       expect(
         wrapper
