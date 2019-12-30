@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { indigo } from '@material-ui/core/colors';
+import { purple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Switch from '@material-ui/core/Switch';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -90,18 +92,36 @@ export const useStyles = theme => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    background: indigo,
   },
   fixedHeight: {
     height: 400,
   },
 });
 
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: purple[300],
+    '&$checked': {
+      color: purple[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
+
 class DrawerBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
-    this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.state = {
+      open: false,
+      palette: {
+        primary: { main: '#121212' },
+        type: 'dark',
+      },
+    };
   }
 
   toggleDrawer = () => {
@@ -145,6 +165,11 @@ class DrawerBar extends React.Component {
             >
               Dashboard
             </Typography>
+            <PurpleSwitch
+              // eslint-disable-next-line react/destructuring-assignment
+              onClick={this.props.onToggleDark}
+            />
+            Toggle Dark Theme
           </Toolbar>
         </AppBar>
         <Drawer
@@ -183,5 +208,6 @@ class DrawerBar extends React.Component {
 }
 DrawerBar.propTypes = {
   classes: PropTypes.func.isRequired,
+  onToggleDark: PropTypes.func.isRequired,
 };
 export default withStyles(useStyles)(DrawerBar);
