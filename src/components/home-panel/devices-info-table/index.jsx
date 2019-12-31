@@ -116,12 +116,18 @@ export default function DevicesInfoTable() {
     return <FiberManualRecordIcon className={classes.red} fontSize="small" />;
   };
 
-  if (loading) return <CircularProgress className={classes.load} />;
-  if (error) return <p className={classes.load}>Error :(</p>;
+  if (loading)
+    return <CircularProgress id="loading" className={classes.load} />;
+  if (error)
+    return (
+      <p id="error" className={classes.load}>
+        Error :(
+      </p>
+    );
 
   return (
     <Paper>
-      <div className={classes.wrapdiv}>
+      <div id="table">
         <TableContainer className={classes.container}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -139,7 +145,7 @@ export default function DevicesInfoTable() {
             </TableHead>
             <TableBody>
               {data.allDevices.nodes.map(device => (
-                <TableRow key={device.name}>
+                <TableRow key={device.uuid}>
                   <StyledTableCell>{device.deviceNickname}</StyledTableCell>
                   <StyledTableCell>{device.internalIpV4}</StyledTableCell>
                   <StyledTableCell>
