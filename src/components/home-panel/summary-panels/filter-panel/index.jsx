@@ -1,66 +1,130 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Zoom from '@material-ui/core/Zoom';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const useStyles = () => ({
   card: {
     display: 'flex',
-    background: 'lightgrey',
+    background: 'white',
     minHeight: 100,
+    maxHeight: 100,
   },
-  content: {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
+  buttonGroup: {
+    position: 'absolute',
+    left: '85%',
+    top: '46%',
     transform: 'translate(-50%, -50%)',
   },
-  red: {
-    height: 20,
-    width: 20,
-    color: 'red',
+  redButton: {
+    color: '#d32f2f',
   },
   yellow: {
-    height: 20,
-    width: 20,
-    color: 'yellow',
+    color: '#ffa000',
   },
-  green: {
-    height: 20,
-    width: 20,
-    color: 'green',
+  greenButton: {
+    color: '#388e3c',
+  },
+  titlebar: {
+    position: 'absolute',
+    left: '2%',
+    top: '0%',
+    transform: 'translate(0%, -30%)',
+  },
+  title: {
+    minWidth: '100px',
+    background: '#298abd',
   },
 });
+
+const GreenButton = withStyles({
+  root: {
+    '&:hover': {
+      backgroundColor: '#C9E2CB',
+    },
+    '&:active': {
+      backgroundColor: '#C9E2CB',
+    },
+  },
+})(Button);
+
+const YellowButton = withStyles({
+  root: {
+    '&:hover': {
+      backgroundColor: '#FDFAC9',
+    },
+    '&:active': {
+      backgroundColor: '#FDFAC9',
+    },
+  },
+})(Button);
+
+const RedButton = withStyles({
+  root: {
+    '&:hover': {
+      backgroundColor: '#FDDAC9',
+    },
+    '&:active': {
+      backgroundColor: '#FDDAC9',
+    },
+  },
+})(Button);
 
 class FilterPanel extends Component {
   render() {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <div>
-            <IconButton>
-              <FiberManualRecordIcon className={classes.green} />
-              <Typography>15</Typography>
-            </IconButton>
+        <CardContent>
+          <div className={classes.titlebar}>
+            <SnackbarContent
+              className={classes.title}
+              message="DEVICE RATING FILTER THINGY"
+            />
           </div>
-
-          <div>
-            <IconButton>
-              <FiberManualRecordIcon className={classes.yellow} />
-              <Typography>10</Typography>
-            </IconButton>
-          </div>
-
-          <div>
-            <IconButton>
-              <FiberManualRecordIcon className={classes.red} />
-              <Typography>9</Typography>
-            </IconButton>
+          <div className={classes.buttonGroup}>
+            <ButtonGroup
+              orientation="vertical"
+              variant="text"
+              aria-label="text primary button group"
+            >
+              <GreenButton
+                size="small"
+                startIcon={
+                  <Zoom in>
+                    <RadioButtonUncheckedIcon className={classes.greenButton} />
+                  </Zoom>
+                }
+              >
+                7
+              </GreenButton>
+              <YellowButton
+                size="small"
+                startIcon={
+                  <Zoom in style={{ transitionDelay: '150ms' }}>
+                    <RadioButtonUncheckedIcon className={classes.yellow} />
+                  </Zoom>
+                }
+              >
+                5
+              </YellowButton>
+              <RedButton
+                size="small"
+                startIcon={
+                  <Zoom in style={{ transitionDelay: '300ms' }}>
+                    <RadioButtonUncheckedIcon className={classes.redButton} />
+                  </Zoom>
+                }
+              >
+                2
+              </RedButton>
+            </ButtonGroup>
           </div>
         </CardContent>
       </Card>
