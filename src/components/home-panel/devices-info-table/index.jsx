@@ -32,23 +32,6 @@ const columns = [
   },
 ];
 
-function createData(name, ip, rating, wire) {
-  return { name, ip, rating, wire };
-}
-
-const rows = [
-  createData('Amazon Alexa', '180.164.22.38', 2, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 6, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 1, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 2, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 3, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 5, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 4, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 4, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 3, 'yes/no?'),
-  createData('Amazon Alexa', '180.164.22.38', 2, 'yes/no?'),
-];
-
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -62,6 +45,22 @@ const StyledTableCell = withStyles(theme => ({
 const useStyles = makeStyles({
   container: {
     maxHeight: 170,
+    '&::-webkit-scrollbar': {
+      width: '0.4em',
+    },
+    // '&:hover::-webkit-scrollbar': {
+    //   width: '0.4em',
+    // },
+    '&:hover::-webkit-scrollbar-thumb': {
+      backgroundColor: 'darkgray',
+    },
+    '&::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      outline: '1px solid slategrey',
+    },
   },
   green: {
     color: 'green',
@@ -122,35 +121,40 @@ export default function DevicesInfoTable() {
 
   return (
     <Paper>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <StyledTableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={data.allDevices.nodes.deviceNickname}>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                <StyledTableCell>{row.ip}</StyledTableCell>
-                <StyledTableCell>
-                  <IconButton size="small">{setRating(row.rating)}</IconButton>
-                </StyledTableCell>
-                <StyledTableCell>{row.wire}</StyledTableCell>
+      <div className={classes.wrapdiv}>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map(column => (
+                  <StyledTableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </StyledTableCell>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {data.allDevices.nodes.map(device => (
+                <TableRow key={device.name}>
+                  <StyledTableCell>{device.deviceNickname}</StyledTableCell>
+                  <StyledTableCell>{device.internalIpV4}</StyledTableCell>
+                  <StyledTableCell>
+                    <IconButton size="small">
+                      {/* {setRating(device.rating)} */}
+                      {setRating(6)}
+                    </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell>??</StyledTableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </Paper>
   );
 }
