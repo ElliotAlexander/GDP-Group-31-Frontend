@@ -1,4 +1,4 @@
-export const userConstants = {
+export const deviceConstants = {
   SET: 'SET',
   GET: 'GET',
   CLEAR: 'CLEAR',

@@ -1,12 +1,12 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
-import App from '../src/App';
+import App from '../src/App.jsx';
 
 describe('<App />', () => {
-  const wrap = mount(<App />);
+  const wrap = shallow(<App />);
 
   it('renders', () => {
-    expect(wrap.find(App).exists()).toBe(true);
+    expect(wrap).toBeTruthy();
   });
 });
