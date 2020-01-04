@@ -41,7 +41,6 @@ class DashboardGrid extends React.Component {
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 6, md: 6, sm: 6, xs: 1, xxs: 1 }}
         rowHeight={50}
-        width={1400}
       >
         <div className={classes.a} key="a">
           a

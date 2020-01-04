@@ -42,7 +42,6 @@ class DeviceGrid extends React.Component {
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 4, md: 4, sm: 4, xs: 1, xxs: 1 }}
         rowHeight={50}
-        width={1200}
       >
         <div className={classes.toprow} key="up-down">
           <DeviceIPAddress device={device} />

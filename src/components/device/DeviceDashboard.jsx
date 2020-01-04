@@ -1,16 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { indigo } from '@material-ui/core/colors';
 import { withRouter } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import DevicePanel from './DevicePanel';
-import DrawerBar from '../misc/sidebar/Sidebar';
+import Sidebar from '../misc/sidebar/Sidebar';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
   title: {
     flexGrow: 1,
   },
@@ -41,13 +40,12 @@ function DeviceDashboard(props) {
   const { location } = props;
 
   return (
-    <div className={classes.root}>
+    <Sidebar>
       <CssBaseline />
-      <DrawerBar />
       <main className={classes.content}>
         <DevicePanel location={location} />
       </main>
-    </div>
+    </Sidebar>
   );
 }
 

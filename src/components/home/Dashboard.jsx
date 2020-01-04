@@ -3,8 +3,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { indigo } from '@material-ui/core/colors';
+import { withRouter } from 'react-router-dom';
 
-import DrawerBar from '../misc/sidebar/Sidebar';
+import Sidebar from '../misc/sidebar/Sidebar';
 import DashboardGrid from './DashboardGrid';
 
 const useStyles = makeStyles(theme => ({
@@ -33,17 +34,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard() {
+function Dashboard() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Sidebar>
       <CssBaseline />
-      <DrawerBar>
-        <main className={classes.content}>
-          <DashboardGrid />
-        </main>
-      </DrawerBar>
-    </div>
+      <main className={classes.content}>
+        <DashboardGrid />
+      </main>
+    </Sidebar>
   );
 }
+
+export default withRouter(Dashboard);
