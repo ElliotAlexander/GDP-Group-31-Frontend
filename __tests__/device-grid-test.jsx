@@ -1,23 +1,52 @@
 import React from 'react';
-import { createShallow } from '@material-ui/core/test-utils';
+import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
 import DeviceGrid from 'components/dashboard/device-panel/DeviceGrid';
 
-describe('HomePanelGrid Component', () => {
-  let shallow;
-  let wrapper;
+import configureMockStore from 'redux-mock-store';
 
-  beforeAll(() => {
-    shallow = createShallow({ dive: true });
-    wrapper = shallow(<DeviceGrid />);
+describe('HomePanelGrid Component', () => {
+  let wrapper;
+  let store;
+
+  const mockStore = configureMockStore([]);
+
+  const mockDevice = {
+    device: {
+      uuid: 'test',
+    },
+  };
+
+  beforeEach(() => {
+    store = mockStore({
+      device: {},
+    });
+    wrapper = shallow(
+      <Provider store={store}>
+        <DeviceGrid device={mockDevice} />
+      </Provider>,
+    );
   });
 
-  it('Renders with no crash', () => {
-    shallow(<DeviceGrid />);
+  describe('Component renders, ', () => {
+    it('Renders', () => {
+      expect(wrapper).toBeDefined();
+    });
   });
 
   describe('Style sheet applied', () => {
     it('Renders grid', () => {
-      expect(wrapper.find('.layout')).toHaveLength(1);
+      // See https://github.com/airbnb/enzyme/issues/2282
+      // and
+      // https://github.com/airbnb/enzyme/issues/2202
+      // Not sure there's a better solution to this (as of Dec 2019)
+      expect(
+        wrapper
+          .dive()
+          .dive()
+          .dive()
+          .find('.layout'),
+      ).toHaveLength(1);
     });
   });
 });

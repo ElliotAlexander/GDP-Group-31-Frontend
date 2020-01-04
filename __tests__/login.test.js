@@ -1,9 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
-import { userConstants } from '../src/misc/constants/user-constants';
+import { authenticationConstants } from '../src/misc/constants/authentication-constants';
 import { alertConstants } from '../src/misc/constants/alert-constants';
-import { login } from '../src/misc/redux-actions/login';
+import { login } from '../src/misc/redux-actions/authentication';
 
 describe('login action', () => {
   const middlewares = [thunk];
@@ -19,7 +19,9 @@ describe('login action', () => {
     const store = mockStore({ actions: [] });
 
     return store.dispatch(login('uname', 'pass')).then(() => {
-      expect(store.getActions()[1].type).toEqual(userConstants.LOGIN_FAILURE);
+      expect(store.getActions()[1].type).toEqual(
+        authenticationConstants.LOGIN_FAILURE,
+      );
     });
   });
 
@@ -39,13 +41,15 @@ describe('login action', () => {
     const store = mockStore({ actions: [] });
 
     return store.dispatch(login('uname', 'pass')).then(() => {
-      expect(store.getActions()[1].type).toEqual(userConstants.LOGIN_SUCCESS);
+      expect(store.getActions()[1].type).toEqual(
+        authenticationConstants.LOGIN_SUCCESS,
+      );
     });
   });
 
   it('should return a USERS_LOGIN_REQUEST message when login attempted ', () => {
     const expectedRequestActions = {
-      type: userConstants.LOGIN_REQUEST,
+      type: authenticationConstants.LOGIN_REQUEST,
       user: { username: 'uname' },
     };
 

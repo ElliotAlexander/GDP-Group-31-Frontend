@@ -1,4 +1,4 @@
-import { userConstants } from '../src/misc/constants/user-constants';
+import { authenticationConstants } from '../src/misc/constants/authentication-constants';
 import { authentication } from '../src/misc/reducers/authentication-reducer';
 
 describe('authentication reducer', () => {
@@ -11,7 +11,7 @@ describe('authentication reducer', () => {
       authentication(
         {},
         {
-          type: userConstants.LOGIN_REQUEST,
+          type: authenticationConstants.LOGIN_REQUEST,
           user: 'test_user',
         },
       ),
@@ -26,7 +26,7 @@ describe('authentication reducer', () => {
       authentication(
         {},
         {
-          type: userConstants.LOGIN_SUCCESS,
+          type: authenticationConstants.LOGIN_SUCCESS,
           user: 'test_user',
         },
       ),
@@ -41,7 +41,7 @@ describe('authentication reducer', () => {
       authentication(
         {},
         {
-          type: userConstants.LOGIN_FAILURE,
+          type: authenticationConstants.LOGIN_FAILURE,
           user: 'test_user',
         },
       ),
@@ -53,7 +53,7 @@ describe('authentication reducer', () => {
       authentication(
         {},
         {
-          type: userConstants.LOGOUT,
+          type: authenticationConstants.LOGOUT,
           user: 'test_user',
         },
       ),

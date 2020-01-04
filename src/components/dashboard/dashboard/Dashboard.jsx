@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { indigo } from '@material-ui/core/colors';
 import HomePanel from '../../home-panel/index';
-import DrawerBar from '../DrawerBar/DrawerBar.jsx';
+import DrawerBar from '../drawer-bar/DrawerBar.jsx';
 
 const useStyles = makeStyles(theme => ({
   title: {

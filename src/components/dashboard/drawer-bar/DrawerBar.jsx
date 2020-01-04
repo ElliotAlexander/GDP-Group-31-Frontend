@@ -178,7 +178,7 @@ function DrawerBar(props) {
           >
             Device List
           </Typography>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} id="closeBtn">
             <ChevronLeftIcon />
           </IconButton>
         </div>

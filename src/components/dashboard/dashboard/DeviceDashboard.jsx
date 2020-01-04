@@ -5,7 +5,7 @@ import { indigo } from '@material-ui/core/colors';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DevicePanel from '../device-panel/DevicePanel.jsx';
-import DrawerBar from '../DrawerBar/DrawerBar.jsx';
+import DrawerBar from '../drawer-bar/DrawerBar.jsx';
 
 const useStyles = makeStyles(theme => ({
   root: {
