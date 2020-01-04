@@ -1,9 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
-import { authenticationConstants } from '../src/misc/constants/authentication-constants';
-import { alertConstants } from '../src/misc/constants/alert-constants';
-import { login } from '../src/misc/redux-actions/authentication';
+import { authenticationConstants } from 'misc/constants/authentication-constants';
+import { alertConstants } from 'misc/constants/alert-constants';
+import { login } from 'misc/redux-actions/authentication';
 
 describe('login action', () => {
   const middlewares = [thunk];

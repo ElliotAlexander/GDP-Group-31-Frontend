@@ -1,9 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { makeStyles } from '@material-ui/core/styles';
 import { indigo } from '@material-ui/core/colors';
-import HomePanel from '../../home-panel/index';
-import DrawerBar from '../drawer-bar/DrawerBar.jsx';
+
+import DrawerBar from '../misc/sidebar/Sidebar';
+import DashboardGrid from './DashboardGrid';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -39,7 +41,7 @@ export default function Dashboard() {
       <CssBaseline />
       <DrawerBar>
         <main className={classes.content}>
-          <HomePanel />
+          <DashboardGrid />
         </main>
       </DrawerBar>
     </div>

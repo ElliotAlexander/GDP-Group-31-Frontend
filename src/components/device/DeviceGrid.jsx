@@ -3,7 +3,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import DeviceIPAddress from './components/DeviceIPAddress';
+import DeviceIPAddress from './panels/IPAddressPanel';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

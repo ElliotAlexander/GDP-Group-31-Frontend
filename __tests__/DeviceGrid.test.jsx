@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
-import DeviceGrid from 'components/dashboard/device-panel/DeviceGrid';
+import DeviceGrid from 'components/device/DeviceGrid';
 
 import configureMockStore from 'redux-mock-store';
 

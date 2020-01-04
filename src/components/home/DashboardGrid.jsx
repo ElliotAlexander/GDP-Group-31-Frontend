@@ -18,7 +18,7 @@ const useStyles = () => ({
   },
 });
 
-class HomePanelGrid extends React.Component {
+class DashboardGrid extends React.Component {
   render() {
     const { classes } = this.props;
     const layouts = {
@@ -69,8 +69,8 @@ class HomePanelGrid extends React.Component {
   }
 }
 
-HomePanelGrid.propTypes = {
+DashboardGrid.propTypes = {
   classes: PropTypes.func.isRequired,
 };
 
-export default withStyles(useStyles)(HomePanelGrid);
+export default withStyles(useStyles)(DashboardGrid);

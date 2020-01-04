@@ -1,5 +1,5 @@
-import { alertActions } from '../src/misc/redux-actions/alert-actions';
-import { alertConstants } from '../src/misc/constants/alert-constants';
+import { alertActions } from 'misc/redux-actions/alert-actions';
+import { alertConstants } from 'misc/constants/alert-constants';
 
 describe('actions', () => {
   it('should create an action with a success message', () => {

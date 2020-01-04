@@ -113,7 +113,7 @@ function mapStateToProps(state) {
   };
 }
 
-function DrawerBar(props) {
+function Sidebar(props) {
   const classes = useStyles();
   const { children, dispatch } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
@@ -202,9 +202,9 @@ function DrawerBar(props) {
   );
 }
 
-DrawerBar.propTypes = {
+Sidebar.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(DrawerBar);
+export default connect(mapStateToProps)(Sidebar);

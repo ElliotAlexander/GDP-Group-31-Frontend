@@ -27,7 +27,7 @@ const tooltipText =
   'address in a range (normally 1-256). This address is supplied by your ' +
   'router, and is used to direct traffic to each specific device.';
 
-function DeviceIPAddress(props) {
+function IPAddressPanel(props) {
   const classes = useStyles();
   const { device } = props;
 
@@ -52,10 +52,10 @@ function DeviceIPAddress(props) {
   );
 }
 
-DeviceIPAddress.propTypes = {
+IPAddressPanel.propTypes = {
   device: PropTypes.shape({
     internalIpV4: PropTypes.string,
   }),
 };
 
-export default DeviceIPAddress;
+export default IPAddressPanel;

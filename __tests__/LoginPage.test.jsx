@@ -1,6 +1,6 @@
 import React from 'react';
 import { createShallow } from '@material-ui/core/test-utils';
-import { LoginPageWithStyles } from '../src/components/login-page/index.jsx';
+import { LoginPageWithStyles } from 'components/login/LoginPage';
 
 describe('Login Page Component', () => {
   let shallow;

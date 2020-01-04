@@ -1,18 +1,18 @@
 import React from 'react';
 import { createShallow } from '@material-ui/core/test-utils';
-import HomePanelGrid from 'components/home-panel/home-panel-grid';
+import DashboardGrid from 'components/home/DashboardGrid';
 
-describe('HomePanelGrid Component', () => {
+describe('Dashboard Grid Component', () => {
   let shallow;
   let wrapper;
 
   beforeAll(() => {
     shallow = createShallow({ dive: true });
-    wrapper = shallow(<HomePanelGrid />);
+    wrapper = shallow(<DashboardGrid />);
   });
 
   it('renders without crashing', () => {
-    shallow(<HomePanelGrid />);
+    shallow(<DashboardGrid />);
   });
 
   describe('Styles', () => {

@@ -1,5 +1,5 @@
-import { alertConstants } from '../src/misc/constants/alert-constants';
-import { alert } from '../src/misc/reducers/alert-reducer';
+import { alertConstants } from 'misc/constants/alert-constants';
+import { alert } from 'misc/reducers/alert-reducer';
 
 describe('alert reducer', () => {
   it('should return the initial state', () => {

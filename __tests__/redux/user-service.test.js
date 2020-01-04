@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { userService } from '../src/misc/user-service';
+import { userService } from 'misc/user-service';
 
 describe('login service', () => {
   afterEach(() => {

@@ -1,5 +1,5 @@
-import { authenticationConstants } from '../src/misc/constants/authentication-constants';
-import { authentication } from '../src/misc/reducers/authentication-reducer';
+import { authenticationConstants } from 'misc/constants/authentication-constants';
+import { authentication } from 'misc/reducers/authentication-reducer';
 
 describe('authentication reducer', () => {
   it('should return the initial state', () => {

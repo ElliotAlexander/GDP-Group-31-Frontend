@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DrawerBar from 'components/dashboard/drawer-bar/DrawerBar.jsx';
+import Sidebar from 'components/misc/sidebar/Sidebar';
 import configureStore from 'redux-mock-store';
 
 const middlewares = [];
@@ -8,14 +8,14 @@ const mockStore = configureStore(middlewares);
 const initialState = {};
 const store = mockStore(initialState);
 
-describe('DrawerBar Testing', () => {
+describe('Sidebar Testing', () => {
   it('renders without crashing', () => {
-    shallow(<DrawerBar store={store} />).dive();
+    shallow(<Sidebar store={store} />).dive();
   });
 });
 
 describe('button testing', () => {
-  const wrapper = shallow(<DrawerBar store={store} />).dive();
+  const wrapper = shallow(<Sidebar store={store} />).dive();
 
   it('renders a button', () => {
     setTimeout(() => {
@@ -24,9 +24,9 @@ describe('button testing', () => {
   });
 });
 
-describe('drawerbar function calls', () => {
+describe('Sidebar function calls', () => {
   it('button click', () => {
-    let wrapper = shallow(<DrawerBar store={store} />).dive();
+    let wrapper = shallow(<Sidebar store={store} />).dive();
     setTimeout(() => {
       wrapper = wrapper.find('#closeBtn').simulate('click');
       setTimeout(() => {
@@ -37,7 +37,7 @@ describe('drawerbar function calls', () => {
 });
 
 describe('typography', () => {
-  const wrapper = shallow(<DrawerBar store={store} />).dive();
+  const wrapper = shallow(<Sidebar store={store} />).dive();
   it('typography', () => {
     setTimeout(() => {
       wrapper
@@ -50,7 +50,7 @@ describe('typography', () => {
 
 describe('button labelling', () => {
   it("'check aria label'", () => {
-    const wrapper = shallow(<DrawerBar store={store} />).dive();
+    const wrapper = shallow(<Sidebar store={store} />).dive();
     setTimeout(() => {
       expect(
         wrapper

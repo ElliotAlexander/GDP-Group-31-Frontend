@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 
-import DevicePanel from 'components/dashboard/device-panel/DevicePanel.jsx';
+import DevicePanel from 'components/device/DevicePanel';
 import configureMockStore from 'redux-mock-store';
 
 describe('Device Panel', () => {

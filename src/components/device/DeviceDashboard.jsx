@@ -4,8 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { indigo } from '@material-ui/core/colors';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import DevicePanel from '../device-panel/DevicePanel.jsx';
-import DrawerBar from '../drawer-bar/DrawerBar.jsx';
+import DevicePanel from './DevicePanel';
+import DrawerBar from '../misc/sidebar/Sidebar';
 
 const useStyles = makeStyles(theme => ({
   root: {
