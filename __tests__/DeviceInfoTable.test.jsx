@@ -2,7 +2,7 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { createMount } from '@material-ui/core/test-utils';
 import { MockedProvider } from '@apollo/react-testing';
-import DevicesInfoTable from 'components/home-panel/devices-info-table';
+import DevicesInfoTable from 'components/home/panels/DeviceInfoTable';
 import { act } from 'react-dom/test-utils';
 
 const DEVICE_LIST_QUERY = gql`
