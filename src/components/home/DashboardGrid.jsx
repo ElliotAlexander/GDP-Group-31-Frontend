@@ -2,7 +2,7 @@ import React from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import DevicesInfoTable from './devices-info-table';
+import DevicesInfoTable from './panels/DeviceInfoTable';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
