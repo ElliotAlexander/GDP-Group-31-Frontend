@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     display: 'table-cell',
     jusitfyContent: 'center',
     verticalAlign: 'middle',
+    color: 'black',
   },
   marginAutoContainer: {
     width: 500,
@@ -34,16 +35,10 @@ function IPAddressPanel(props) {
   return (
     <Paper className={classes.root}>
       <Tooltip title={tooltipText} arrow>
-        <Box display="flex" width="100%" height="100%" bgcolor="#bbdefb">
+        <Box display="flex" width="100%" height="100%">
           <Box m="auto">
-            <Typography
-              component="h1"
-              variant="h6"
-              color="primary"
-              align="center"
-              noWrap
-            >
-              Device IP: {device.internalIpV4}
+            <Typography component="h1" variant="h6" align="center" noWrap>
+              IP Address: {device.internalIpV4}
             </Typography>
           </Box>
         </Box>
