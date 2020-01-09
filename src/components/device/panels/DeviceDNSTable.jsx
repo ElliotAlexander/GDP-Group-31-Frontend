@@ -59,6 +59,7 @@ function DeviceDNSTable(props) {
           toolbar: true,
           paging: false,
           maxBodyHeight: 350,
+          minBodyHeight: 350,
           maxHeaderHeight: 50,
           search: true,
           header: false,
