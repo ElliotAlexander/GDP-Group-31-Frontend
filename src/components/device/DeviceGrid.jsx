@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import DeviceIPAddress from './panels/IPAddressPanel';
+import DeviceDNSTable from './panels/DeviceDNSTable';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -56,7 +57,7 @@ class DeviceGrid extends React.Component {
           ??????
         </div>
         <div className={classes.middlerow} key="at-risk">
-          At-Risk
+          Security rating timeline
         </div>
         <div className={classes.middlerow} key="device-info">
           Device Info Table
@@ -65,7 +66,7 @@ class DeviceGrid extends React.Component {
           HTTP-packets
         </div>
         <div className={classes.bottomrow} key="timeline">
-          Security Rating Timeline
+          <DeviceDNSTable device={device} />
         </div>
         <div className={classes.bottomrow} key="world-map">
           World Map
