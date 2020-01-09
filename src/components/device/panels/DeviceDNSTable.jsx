@@ -58,11 +58,12 @@ function DeviceDNSTable(props) {
         options={{
           toolbar: true,
           paging: false,
-          maxBodyHeight: 350,
-          minBodyHeight: 350,
+          maxBodyHeight: 346,
+          minBodyHeight: 346,
           maxHeaderHeight: 50,
           search: true,
           header: false,
+          exportButton: true,
         }}
         menuPosition="fixed"
         menuPlacement="auto"

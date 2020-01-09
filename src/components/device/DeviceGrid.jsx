@@ -65,7 +65,7 @@ class DeviceGrid extends React.Component {
         <div className={classes.middlerow} key="http-packets">
           HTTP-packets
         </div>
-        <div className={classes.bottomrow} key="timeline">
+        <div key="timeline">
           <DeviceDNSTable device={device} />
         </div>
         <div className={classes.bottomrow} key="world-map">
