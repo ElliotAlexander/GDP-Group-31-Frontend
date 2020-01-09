@@ -66,7 +66,8 @@ function DeviceDNSTable(props) {
         menuPosition="fixed"
         menuPlacement="auto"
         components={{
-          Toolbar: () => <MTableToolbar />,
+          /* eslint-disable react/jsx-props-no-spreading */
+          Toolbar: toolbarProps => <MTableToolbar {...toolbarProps} />,
         }}
       />
     </div>
