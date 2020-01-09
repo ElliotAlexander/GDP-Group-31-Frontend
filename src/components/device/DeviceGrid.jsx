@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import DeviceIPAddress from './panels/IPAddressPanel';
 import DeviceDNSTable from './panels/DeviceDNSTable';
+import DataUpDownPanel from './panels/DataUpDownPanel';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -48,7 +49,7 @@ class DeviceGrid extends React.Component {
           <DeviceIPAddress device={device} />
         </div>
         <div className={classes.toprow} key="data">
-          Selected Device: {device.uuid}
+          <DataUpDownPanel device={device} />
         </div>
         <div className={classes.toprow} key="ip-count">
           IPs Connected
