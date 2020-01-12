@@ -18,9 +18,9 @@ const useStyles = () => ({
     top: '50%',
     transform: 'translate(-170%, -60%)',
     fontSize: 60,
-    fontFamily: 'Ma Shan Zheng',
+    fontFamily: 'Orbitron',
     src: `
-      url(https://fonts.googleapis.com/css?family=Ma+Shan+Zheng&display=swap)
+      url(https://fonts.googleapis.com/css?family=Orbitron&display=swap)
     `,
   },
   titlebar: {

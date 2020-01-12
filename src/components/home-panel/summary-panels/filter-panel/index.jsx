@@ -51,6 +51,9 @@ const GreenButton = withStyles({
     '&:active': {
       backgroundColor: '#C9E2CB',
     },
+    '&:focus': {
+      backgroundColor: '#C9E2CB',
+    },
   },
 })(Button);
 
@@ -62,6 +65,9 @@ const YellowButton = withStyles({
     '&:active': {
       backgroundColor: '#FDFAC9',
     },
+    '&:focus': {
+      backgroundColor: '#FDFAC9',
+    },
   },
 })(Button);
 
@@ -71,6 +77,9 @@ const RedButton = withStyles({
       backgroundColor: '#FDDAC9',
     },
     '&:active': {
+      backgroundColor: '#FDDAC9',
+    },
+    '&:focus': {
       backgroundColor: '#FDDAC9',
     },
   },

@@ -32,7 +32,7 @@ const useStyles = () => ({
   },
   data: {
     position: 'absolute',
-    left: '65%',
+    left: '62%',
     top: '50%',
     transform: 'translate(0%, -54%)',
   },
@@ -49,7 +49,7 @@ class DataInOutPanel extends Component {
       <Card className={classes.card}>
         <CardContent>
           <div className={classes.titlebar}>
-            <SnackbarContent className={classes.title} message="DATA SMTH" />
+            <SnackbarContent className={classes.title} message="DATA UP/DOWN" />
           </div>
 
           <div className={classes.data}>
@@ -60,7 +60,7 @@ class DataInOutPanel extends Component {
                     <ArrowUpwardIcon fontSize="small" />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="700" />
+                <ListItemText primary="700 Mb" />
               </ListItem>
               <Divider />
               <ListItem>
@@ -69,7 +69,7 @@ class DataInOutPanel extends Component {
                     <ArrowDownwardIcon fontSize="small" />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="200" />
+                <ListItemText primary="200 Mb" />
               </ListItem>
             </List>
           </div>
