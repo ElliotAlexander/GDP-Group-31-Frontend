@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     jusitfyContent: 'center',
     verticalAlign: 'middle',
     color: 'black',
+    overflow: 'elipsis',
   },
   marginAutoContainer: {
     width: 500,
