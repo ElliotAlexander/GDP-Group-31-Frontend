@@ -16,27 +16,29 @@ import LoginPage from './components/login/LoginPage';
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
+    authentication: state.authentication,
   };
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   httpLink = createHttpLink({
     uri: 'http://localhost:5000/graphql',
   });
 
   authLink = setContext((_, { headers }) => {
-    let token = this.state.user;
-    token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibWVkaXVtX3VzZXIiLCJleHAiOjE1NzkzNzIwMDgsInBlcnNvbl9pZCI6MSwiaXNfYWRtaW4iOm51bGwsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTU3ODc2NzIwNywiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.f3TAHgbKYmlveSYDUuVf2fHadIKnTwgduPXSbs7k9YU";
+    const { authentication } = this.props;
+    if (authentication.user) {
+      const token = authentication.user;
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : '',
+        },
+      };
+    }
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
       },
     };
   });
@@ -47,15 +49,19 @@ class App extends Component {
   });
 
   render() {
+    const { authentication } = this.props;
     return (
       <ApolloProvider client={this.client}>
         <ApolloHooksProvider client={this.client}>
           <BrowserRouter>
-            <ThemeProvider theme={theme}>
-              <Route path="/" exact render={() => <Dashboard />} />
-              <Route path="/login" render={() => <LoginPage />} />
-              <Route path="/device" render={() => <DeviceDashboard />} />
-            </ThemeProvider>
+            {authentication.loggedIn ? (
+              <ThemeProvider theme={theme}>
+                <Route path="/" exact render={() => <Dashboard />} />
+                <Route path="/device" render={() => <DeviceDashboard />} />
+              </ThemeProvider>
+            ) : (
+              <LoginPage />
+            )}
           </BrowserRouter>
         </ApolloHooksProvider>
       </ApolloProvider>
@@ -64,7 +70,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  authentication: PropTypes.shape().isRequired,
 };
 
 export default connect(mapStateToProps)(App);

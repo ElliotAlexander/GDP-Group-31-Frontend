@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import { login } from '../../misc/redux-actions/authentication';
 import img from './background-images/stock-bg-image-3.jpg';
 
@@ -58,6 +60,11 @@ export const useStyles = theme => ({
   },
 });
 
+function Alert(props) {
+  /* eslint-disable */
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -65,10 +72,27 @@ class LoginPage extends React.Component {
     this.state = {
       username: '',
       password: '',
+      open: false,
     };
 
     this.change = this.change.bind(this);
     this.submit = this.submit.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      open: false,
+    });
+  }
+
+  handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({
+      open: false,
+    });
   }
 
   change(e) {
@@ -81,61 +105,87 @@ class LoginPage extends React.Component {
     e.preventDefault();
     const { username, password } = this.state;
     // eslint-disable-next-line react/destructuring-assignment
-    this.props.login(username, password);
+    this.props.login(username, password).then(
+      res => {
+        if (res === undefined) {
+          this.setState({
+            open: true,
+            loginMessage: 'Login failed.',
+          });
+        }
+      },
+      () => {
+        this.setState({
+          open: true,
+          loginMessage: 'Something went wrong when trying to login.',
+        });
+      },
+    );
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, open, loginMessage } = this.state;
     const { classes } = this.props;
 
     return (
-      <Grow in>
-        <Container maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar id="avatar" className={classes.avatar}>
-              <Eco />
-            </Avatar>
-            <form
-              onSubmit={e => this.submit(e)}
-              className={classes.form}
-              noValidate
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="username"
-                id="username"
-                label="Username"
-                value={username}
-                onChange={e => this.change(e)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                id="password"
-                label="Password"
-                type="password"
-                value={password}
-                onChange={e => this.change(e)}
-              />
-              <Button
-                id="submit"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+      <div>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => this.handleClose()}
+        >
+          <Alert onClose={() => this.handleClose()} severity="error">
+            {loginMessage}
+          </Alert>
+        </Snackbar>
+        <Grow in>
+          <Container maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar id="avatar" className={classes.avatar}>
+                <Eco />
+              </Avatar>
+              <form
+                onSubmit={e => this.submit(e)}
+                className={classes.form}
+                noValidate
               >
-                Sign In
-              </Button>
-            </form>
-          </div>
-        </Container>
-      </Grow>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="username"
+                  id="username"
+                  label="Username"
+                  value={username}
+                  onChange={e => this.change(e)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  id="password"
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={e => this.change(e)}
+                />
+                <Button
+                  id="submit"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+              </form>
+            </div>
+          </Container>
+        </Grow>
+      </div>
     );
   }
 }
