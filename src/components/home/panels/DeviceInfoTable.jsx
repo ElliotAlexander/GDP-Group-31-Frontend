@@ -121,7 +121,7 @@ export default function DevicesInfoTable() {
   if (error)
     return (
       <p id="error" className={classes.load}>
-        Error :(
+        Error :( - Device Info table failed to load.
       </p>
     );
 

@@ -4,9 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
-
-import clsx from 'clsx';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
@@ -18,11 +15,15 @@ import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 import { connect } from 'react-redux';
 import ListElement from './ListElement';
 
 import { setDevice } from '../../../misc/redux-actions/device-actions';
+import { logout } from '../../../misc/redux-actions/authentication';
 
 export const drawerWidth = 240;
 
@@ -43,6 +44,7 @@ const DEVICE_LIST_QUERY = gql`
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexGrow: 1,
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -102,6 +104,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     marginBottom: '2px',
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 function mapStateToProps(state) {
@@ -114,7 +119,10 @@ function Sidebar(props) {
   const classes = useStyles();
   const { children, dispatch } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openPopup = Boolean(anchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,76 +132,107 @@ function Sidebar(props) {
     setOpen(false);
   };
 
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logoutUser = () => {
+    dispatch(logout());
+  };
+
   if (loading) return <CircularProgress />;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>Error - Sidebar failed to load. Error:</p>;
 
   return (
-    <div className={classes.root}>
+    <div>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="persistent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        open={open}
-      >
-        <div className={classes.drawerHeader}>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="primary"
-            align="center"
-            noWrap
-            className={classes.title}
-          >
-            Device List
-          </Typography>
-          <IconButton onClick={handleDrawerClose} id="closeBtn">
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List className={classes.deviceList}>
-          {data.allDevices.nodes.map(device => (
-            <div className={classes.listElement} key={device.uuid}>
-              <ListElement
-                drawerWidth={drawerWidth}
-                devices={device}
-                action={() => {
-                  dispatch(setDevice(device));
+      <div className={classes.grow}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={handleDrawerOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Dashboard
+            </Typography>
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
-              />
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={openPopup}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+              </Menu>
             </div>
-          ))}
-        </List>
-      </Drawer>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="persistent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          open={open}
+        >
+          <div className={classes.drawerHeader}>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="primary"
+              align="center"
+              noWrap
+              className={classes.title}
+            >
+              Device List
+            </Typography>
+            <IconButton onClick={handleDrawerClose} id="closeBtn">
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List className={classes.deviceList}>
+            {data.allDevices.nodes.map(device => (
+              <div className={classes.listElement} key={device.uuid}>
+                <ListElement
+                  drawerWidth={drawerWidth}
+                  devices={device}
+                  action={() => {
+                    dispatch(setDevice(device));
+                  }}
+                />
+              </div>
+            ))}
+          </List>
+        </Drawer>
+      </div>
       {children}
     </div>
   );

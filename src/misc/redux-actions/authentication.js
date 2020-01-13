@@ -1,6 +1,5 @@
 import { userService } from '../user-service';
 import { alertActions } from './alert-actions';
-import { history } from '../helpers/history';
 import { authenticationConstants } from '../constants/authentication-constants.js';
 
 export function login(username, password) {
@@ -21,11 +20,9 @@ export function login(username, password) {
 
   return dispatch => {
     dispatch(request({ username }));
-
     return userService.login(username, password).then(
       user => {
         dispatch(success(user));
-        history.push('/');
       },
       error => {
         dispatch(failure(error.toString()));
@@ -35,11 +32,7 @@ export function login(username, password) {
   };
 }
 
-// function logout() {
-//   userService.logout();
-//   return { type: userConstants.LOGOUT };
-// }
-
-// export const userActions = {
-//   login,
-// };
+export function logout() {
+  userService.logout();
+  return { type: authenticationConstants.LOGOUT };
+}

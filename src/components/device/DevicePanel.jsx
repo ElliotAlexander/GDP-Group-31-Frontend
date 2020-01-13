@@ -19,7 +19,6 @@ class DevicePanel extends React.Component {
 
     return (
       <div>
-        <h1> Pad </h1>
         <DeviceGrid device={deviceObj} />
       </div>
     );

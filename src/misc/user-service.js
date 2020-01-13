@@ -1,42 +1,36 @@
+import ApolloClient, { gql } from 'apollo-boost';
+
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
 }
 
-function handleResponse(response) {
-  return response.text().then(text => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        // eslint-disable-next-line no-restricted-globals
-        location.reload(true);
-      }
+function login(username, password) {
+  const client = new ApolloClient({
+    uri: 'http://localhost:5000/graphql',
+  });
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+  const mutation = gql(`
+  mutation {
+    authenticate(input: {
+      email: "${username}",
+      password:"${password}"
+    }) {
+      jwtToken
+    }
+  }
+  `);
+
+  /* eslint-disable */
+  return client.mutate({ mutation }).then(response => {
+    if (response.error || response.data.authenticate.jwtToken === null) {
+      logout();
+      throw new Error('Failed to login');
     }
 
-    return data;
+    localStorage.setItem('user', response.data.authenticate.jwtToken);
+    return response.data.authenticate.jwtToken;
   });
-}
-
-function login(username, password) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
-  };
-
-  return fetch(`/authenticate`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem('user', JSON.stringify(user));
-
-      return user;
-    });
 }
 
 export const userService = {
