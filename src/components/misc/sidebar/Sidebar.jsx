@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
@@ -16,8 +15,7 @@ import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import { AccountCircle } from '@material-ui/core';
-
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
@@ -150,10 +148,7 @@ function Sidebar(props) {
   };
 
   if (loading) return <CircularProgress />;
-  if (error) {
-    console.log(error);
-    return <p>Error - Sidebar failed to load. Error:</p>;
-  }
+  if (error) return <p>Error - Sidebar failed to load. Error:</p>;
 
   return (
     <div>
@@ -166,8 +161,9 @@ function Sidebar(props) {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
+              onClick={handleDrawerOpen}
             >
-              <MenuIcon onClick={handleDrawerOpen} />
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
               Dashboard
