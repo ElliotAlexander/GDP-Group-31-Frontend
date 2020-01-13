@@ -35,9 +35,6 @@ const DEVICE_LIST_QUERY = gql`
         deviceNickname
         deviceHostname
         internalIpV4
-        internalIpV6
-        lastSeen
-        deviceType
         uuid
       }
     }

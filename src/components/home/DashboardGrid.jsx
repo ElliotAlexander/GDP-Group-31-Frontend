@@ -3,6 +3,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import DevicesInfoTable from './panels/DeviceInfoTable';
+import DevicesConnected from './panels/DevicesConnected';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -46,7 +47,7 @@ class DashboardGrid extends React.Component {
           a
         </div>
         <div className={classes.a} key="b">
-          b
+          <DevicesConnected />
         </div>
         <div className={classes.a} key="c">
           c
