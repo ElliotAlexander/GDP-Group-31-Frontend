@@ -11,15 +11,16 @@ function login(username, password) {
   });
 
   const mutation = gql(`
-      mutation {
-        authenticate(input: {
-          email: "${username}",
-          password:"${password}"
-        }) {
-          jwtToken
-        }
-      }
+  mutation {
+    authenticate(input: {
+      email: "${username}",
+      password:"${password}"
+    }) {
+      jwtToken
+    }
+  }
   `);
+
   /* eslint-disable */
   return client.mutate({ mutation }).then(response => {
     if (response.error || response.data.authenticate.jwtToken === null) {
