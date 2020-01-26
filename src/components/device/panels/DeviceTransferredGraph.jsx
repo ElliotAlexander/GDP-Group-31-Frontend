@@ -11,7 +11,7 @@ const ON_RENDER_QUERY = gql`
     allDeviceStatsOverTimes(
       condition: { uuid: $uuid }
       first: 10
-      orderBy: TIMESTAMP_DESC
+      orderBy: TIMESTAMP_ASC
     ) {
       edges {
         node {
