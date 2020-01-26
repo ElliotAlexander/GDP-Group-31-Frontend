@@ -11,6 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { useSubscription } from 'react-apollo-hooks';
 
 const DEVICE_DATA_QUERY = gql`
   query UpDownData($uuid: String!) {
@@ -47,9 +48,25 @@ function DataUpDownPanel(props) {
   const classes = useStyles();
   const { device } = props;
   const { uuid } = device;
-  const { loading, error, data } = useQuery(DEVICE_DATA_QUERY, {
-    variables: { uuid },
+  const { data, loading, error } = {};
+
+  const { refetch } = useQuery(DEVICE_DATA_QUERY, {
+    variables: {
+      uuid
+    },
     skip: !uuid,
+    onCompleted: data => {
+      console.log(data);
+      this.data = data;
+    },
+    onLoading: loading => {
+      console.log(loading);
+      this.loading = loading;
+    },
+    onError: err => {
+      console.log(err);
+      this.err = err;
+    }
   });
 
   if (loading)

@@ -8,6 +8,9 @@ import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { connect } from 'react-redux';
+import { WebSocketLink } from "apollo-link-ws";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+import { split } from 'apollo-link';
 import PropTypes from 'prop-types';
 import Dashboard from './components/home/Dashboard';
 import DeviceDashboard from './components/device/DeviceDashboard';
@@ -24,6 +27,7 @@ class App extends Component {
   httpLink = createHttpLink({
     uri: 'http://localhost:5000/graphql',
   });
+
 
   authLink = setContext((_, { headers }) => {
     const { authentication } = this.props;
@@ -44,6 +48,7 @@ class App extends Component {
   });
 
   client = new ApolloClient({
+    // Pipe subscriptions to websockets
     link: this.authLink.concat(this.httpLink),
     cache: new InMemoryCache(),
   });
