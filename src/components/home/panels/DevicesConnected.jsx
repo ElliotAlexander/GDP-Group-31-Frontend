@@ -52,15 +52,9 @@ function DevicesConnected() {
   return (
     <Paper className={classes.root}>
       <Tooltip title={tooltipText} arrow>
-        <Box display="flex" width="100%" height="100%" bgcolor="#bbdefb">
+        <Box display="flex" width="100%" height="100%">
           <Box m="auto">
-            <Typography
-              component="h1"
-              variant="h6"
-              color="primary"
-              align="center"
-              noWrap
-            >
+            <Typography component="h1" variant="h6" align="center" noWrap>
               Devices Connected:{' '}
               {data.allDevices.nodes.filter(x => x.currentlyActive).length}
             </Typography>
