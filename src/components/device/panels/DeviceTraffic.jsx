@@ -52,10 +52,10 @@ function DeviceTraffic(props) {
   );
 }
 
-IPAddressPanel.propTypes = {
+DeviceTraffic.propTypes = {
   device: PropTypes.shape({
     internalIpV4: PropTypes.string,
   }),
 };
 
-export default IPAddressPanel;
+export default DeviceTraffic;
