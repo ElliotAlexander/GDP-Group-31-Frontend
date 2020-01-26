@@ -45,7 +45,7 @@ class DashboardGrid extends React.Component {
         cols={{ lg: 6, md: 6, sm: 6, xs: 1, xxs: 1 }}
         rowHeight={50}
       >
-        <div className={classes.a} key="a">
+        <div key="a">
           <DeviceRatingFilterPanel />
         </div>
         <div key="b">
@@ -60,7 +60,7 @@ class DashboardGrid extends React.Component {
         <div className={classes.b} key="e">
           World Map
         </div>
-        <div className={classes.c} key="f">
+        <div key="f">
           <DevicesInfoTable />
         </div>
         <div className={classes.c} key="g">
