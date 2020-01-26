@@ -52,7 +52,7 @@ function DataUpDownPanel(props) {
 
   const { refetch } = useQuery(DEVICE_DATA_QUERY, {
     variables: {
-      uuid
+      uuid,
     },
     skip: !uuid,
     onCompleted: data => {
@@ -66,7 +66,7 @@ function DataUpDownPanel(props) {
     onError: err => {
       console.log(err);
       this.err = err;
-    }
+    },
   });
 
   if (loading)
