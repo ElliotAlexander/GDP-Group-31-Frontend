@@ -12,81 +12,92 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
+const useStyles = makeStyles({});
+
 const DEVICE_DATA_QUERY = gql`
-  query UpDownData($uuid: String!) {
-    deviceStatByUuid(uuid: $uuid) {
-      dataIn
-      dataOut
+  query UpDownDataInitial($uuid: String!) {
+    allDeviceStatsOverTimes(
+      condition: { uuid: $uuid }
+      first: 2
+      orderBy: TIMESTAMP_DESC
+    ) {
+      edges {
+        node {
+          dataOut
+          dataIn
+          dataTransferred
+        }
+      }
     }
   }
 `;
 
-const useStyles = makeStyles({
-  container: {},
-});
+function convertBytesToHumanReadable(byteCount) {
+  if (byteCount < 1000) {
+    return `${byteCount} Bytes`;
+  }
 
-const dataDownTooltipText = 'Data downloaded by the selected device.';
+  const KbCount = byteCount / 1000;
+  if (KbCount > 1000) {
+    const MbCount = KbCount / 1000;
+    return `${MbCount} Mb`;
+  }
+  return `${KbCount} Kb`;
+}
 
-const dataUpTooltipText = 'Data uploaded by the selected device.';
-
-function DataUpDownPanel(props) {
+function DataUpDownLivePanel(props) {
   const classes = useStyles();
   const { device } = props;
   const { uuid } = device;
+
   const { data, loading, error } = useQuery(DEVICE_DATA_QUERY, {
-    variables: {
-      uuid,
-    },
+    variables: { uuid },
     skip: !uuid,
-    polling: 5000,
+    pollInterval: 5000,
   });
-
-  const convertBytesToHumanReadable = byteCount => {
-    if (byteCount < 1000) {
-      return `${byteCount} Bytes`;
-    }
-
-    const KbCount = byteCount / 1000;
-    if (KbCount > 1000) {
-      const MbCount = Math.round((KbCount / 1000) * 100) / 100;
-      return `${MbCount} Mb`;
-    }
-    const KbCountRounded = Math.round(KbCount * 100) / 100;
-    return `${KbCountRounded} Kb`;
-  };
 
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;
-  if (error)
+  if (error) {
     return (
       <p id="error" className={classes.load}>
         Error :(
       </p>
     );
+  }
+  console.log(data);
   return (
     <Paper className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <Tooltip title={dataUpTooltipText} arrow>
+        <Tooltip title="Temp" arrow>
           <ListItem>
             <ListItemIcon>
               <ArrowUpwardIcon />
             </ListItemIcon>
             <ListItemText
-              primary={convertBytesToHumanReadable(
-                data.deviceStatByUuid.dataOut,
-              )}
+              primary={
+                convertBytesToHumanReadable(
+                  (data.allDeviceStatsOverTimes.edges[0].node.dataOut -
+                    data.allDeviceStatsOverTimes.edges[1].node.dataOut) /
+                    10,
+                ) + '/s'
+              }
             />
           </ListItem>
         </Tooltip>
-        <Tooltip title={dataDownTooltipText} arrow>
+        <Tooltip title="Temp" arrow>
           <ListItem>
             <ListItemIcon>
               <ArrowDownwardIcon />
             </ListItemIcon>
             <ListItemText
-              primary={convertBytesToHumanReadable(
-                data.deviceStatByUuid.dataIn,
-              )}
+              primary={
+                convertBytesToHumanReadable(
+                  (data.allDeviceStatsOverTimes.edges[0].node.dataIn -
+                    data.allDeviceStatsOverTimes.edges[1].node.dataIn) /
+                    10,
+                ) + '/s'
+              }
             />
           </ListItem>
         </Tooltip>
@@ -95,10 +106,10 @@ function DataUpDownPanel(props) {
   );
 }
 
-DataUpDownPanel.propTypes = {
+DataUpDownLivePanel.propTypes = {
   device: PropTypes.shape({
     uuid: PropTypes.string,
   }),
 };
 
-export default DataUpDownPanel;
+export default DataUpDownLivePanel;

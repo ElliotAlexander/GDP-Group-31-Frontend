@@ -147,7 +147,9 @@ function Sidebar(props) {
   };
 
   if (loading) return <CircularProgress />;
-  if (error) return <p>Error - Sidebar failed to load. Error:</p>;
+  if (error) {
+    return <p>Error - Sidebar failed to load. Error:</p>;
+  }
 
   return (
     <div>

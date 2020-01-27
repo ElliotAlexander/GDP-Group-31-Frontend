@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { split } from 'apollo-link';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Route, BrowserRouter } from 'react-router-dom';
 import { ApolloClient } from 'apollo-boost';
@@ -8,7 +9,10 @@ import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { connect } from 'react-redux';
+import { WebSocketLink } from 'apollo-link-ws';
+
 import PropTypes from 'prop-types';
+import { getMainDefinition } from 'apollo-utilities';
 import Dashboard from './components/home/Dashboard';
 import DeviceDashboard from './components/device/DeviceDashboard';
 import theme from './theming/theme.jsx';
@@ -24,6 +28,24 @@ class App extends Component {
   httpLink = createHttpLink({
     uri: 'http://localhost:5000/graphql',
   });
+
+  wsLink = new WebSocketLink({
+    uri: `ws://localhost:5000/graphql`,
+    options: {
+      reconnect: true,
+    },
+  });
+
+  defaultOptions = {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  };
 
   authLink = setContext((_, { headers }) => {
     const { authentication } = this.props;
@@ -43,9 +65,19 @@ class App extends Component {
     };
   });
 
+  link = split(
+    ({ query }) => {
+      const { kind, operation } = getMainDefinition(query);
+      return kind === 'OperationDefinition' && operation === 'subscription';
+    },
+    this.wsLink,
+    this.authLink.concat(this.httpLink),
+  );
+
   client = new ApolloClient({
-    link: this.authLink.concat(this.httpLink),
+    link: this.link,
     cache: new InMemoryCache(),
+    defaultOptions: this.defaultOptions,
   });
 
   render() {
