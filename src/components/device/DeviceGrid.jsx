@@ -6,6 +6,7 @@ import DeviceTransferredGraph from './panels/DeviceTransferredGraph';
 import DeviceIPAddress from './panels/IPAddressPanel';
 import DeviceDNSTable from './panels/DeviceDNSTable';
 import DataUpDownPanel from './panels/DataUpDownPanel';
+import HttpPieChart from './panels/HttpPieChart';
 import DeviceInfoTable from './panels/DeviceInfoTable';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -59,7 +60,7 @@ class DeviceGrid extends React.Component {
           ??????
         </div>
         <div className={classes.middlerow} key="at-risk">
-          Security rating timeline
+          <HttpPieChart device={device} />
         </div>
         <div className={classes.middlerow} key="device-info">
           <DeviceTransferredGraph device={device} />
