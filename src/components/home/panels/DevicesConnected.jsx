@@ -29,7 +29,7 @@ const DEVICE_LIST_QUERY = gql`
     allDevices {
       nodes {
         uuid
-        currentlyActive
+        lastSeen
       }
     }
   }
@@ -42,21 +42,26 @@ const tooltipText =
 
 function DevicesConnected() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
+  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
+    pollInterval: 5000,
+  });
 
   if (loading) return <CircularProgress />;
   if (error) return <p>Error :(</p>;
-
-  console.log(data);
-
   return (
     <Paper className={classes.root}>
       <Tooltip title={tooltipText} arrow>
         <Box display="flex" width="100%" height="100%">
           <Box m="auto">
             <Typography component="h1" variant="h6" align="center" noWrap>
-              Devices Connected:{' '}
-              {data.allDevices.nodes.filter(x => x.currentlyActive).length}
+              Active Devices:{' '}
+              {
+                data.allDevices.nodes.filter(
+                  x =>
+                    new Date().getTime() - new Date(x.lastSeen).getTime() <
+                    60000,
+                ).length
+              }
             </Typography>
           </Box>
         </Box>

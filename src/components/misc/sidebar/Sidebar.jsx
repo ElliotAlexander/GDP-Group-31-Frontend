@@ -122,7 +122,7 @@ function Sidebar(props) {
   const classes = useStyles();
   const { children, dispatch } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
-    polling: 5000,
+    pollInterval: 5000,
   });
   const [open, setOpen] = React.useState(false);
 

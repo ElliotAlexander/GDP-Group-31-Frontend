@@ -7,6 +7,7 @@ import DevicesConnected from './panels/DevicesConnected';
 import DataUpDownPanel from './panels/DataUpDownPanel';
 import DeviceRatingFilterPanel from './panels/DeviceRatingFilterPanel';
 import DataInOutGraph from './panels/DataInOutGraph';
+import DeviceWorldMap from './panels/DeviceWorldMap';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -59,7 +60,7 @@ class DashboardGrid extends React.Component {
           <DataInOutGraph />
         </div>
         <div className={classes.b} key="e">
-          <AllWorldMap />
+          <DeviceWorldMap />
         </div>
         <div key="f">
           <DevicesInfoTable />

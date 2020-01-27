@@ -61,6 +61,7 @@ function HttpPieChart(props) {
   };
   return (
     <Pie
+      style={{ paddingTop: '100px' }}
       data={data5}
       options={{
         responsive: true,

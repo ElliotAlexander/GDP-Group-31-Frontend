@@ -40,7 +40,9 @@ function convertBytesToHumanReadable(byteCount) {
 
 function DataInOutGraph() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(DEVICES_DATA_QUERY);
+  const { loading, error, data } = useQuery(DEVICES_DATA_QUERY, {
+    pollInterval: 10000,
+  });
 
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;
@@ -50,7 +52,7 @@ function DataInOutGraph() {
         Error :(
       </p>
     );
-  console.log(data);
+
   const timestamps = [];
   const dataPointsDataTransferred = [];
   for (let i = 0; i < data.allDeviceDataSumOverTimes.edges.length; i += 1) {
