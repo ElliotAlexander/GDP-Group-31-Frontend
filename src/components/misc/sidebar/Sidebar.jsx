@@ -38,6 +38,7 @@ const DEVICE_LIST_QUERY = gql`
         deviceHostname
         internalIpV4
         uuid
+        lastSeen
       }
     }
   }
@@ -120,7 +121,9 @@ function mapStateToProps(state) {
 function Sidebar(props) {
   const classes = useStyles();
   const { children, dispatch } = props;
-  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
+  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
+    polling: 5000,
+  });
   const [open, setOpen] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
