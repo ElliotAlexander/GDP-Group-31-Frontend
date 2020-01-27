@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import { heatmapLayer } from './map-style';
 import { useQuery } from '@apollo/react-hooks';
+import { heatmapLayer } from './map-style';
 
 const MAPBOX_TOKEN =
   'pk.eyJ1IjoieHRyYXBvd2VyIiwiYSI6ImNrNXBsMzJ4azB0b3czbm1vbmQ2YmdrZmMifQ.tOmZu41N2WGmpOUA06y8og'; // Set your mapbox token here
 
 const DEVICE_MAP_QUERY = gql`
   query DeviceMapQuery($uuid: String!) {
-    allIpAddressLocations(condition: {uuid: $uuid}) {
+    allIpAddressLocations(condition: { uuid: $uuid }) {
       edges {
         node {
           ipAddress
@@ -29,10 +29,9 @@ const useStyles = makeStyles({
   container: {},
 });
 
-
 function DeviceWorldMap(props) {
   const classes = useStyles();
-  const [ viewport, setViewport ] = React.useState({
+  const [viewport, setViewport] = React.useState({
     latitude: 40,
     longitude: -100,
     zoom: 3,
@@ -47,43 +46,37 @@ function DeviceWorldMap(props) {
     skip: !uuid,
   });
 
-
   const _onViewportChange = viewportNew => setViewport(viewportNew);
 
-  if (loading)
-    return <CircularProgress />;
+  if (loading) return <CircularProgress />;
 
-  if (error){
-  console.log(error);
-    return (
-      <p id="error" >
-        Error :(
-      </p>
-    );
-    }
+  if (error) {
+    console.log(error);
+    return <p id="error">Error :(</p>;
+  }
 
-  const vals = data.allIpAddressLocations.edges.map((arr) => {
+  const vals = data.allIpAddressLocations.edges.map(arr => {
     const x = arr.node;
     return {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [x.longitude, x.latitude]
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [x.longitude, x.latitude],
       },
-      "properties": {
-        "name": x.ipAddress
+      properties: {
+        name: x.ipAddress,
       },
-    }
+    };
   });
 
   const geoJson = {
-    "type": "FeatureCollection", 
-    "features": vals,
-  }
+    type: 'FeatureCollection',
+    features: vals,
+  };
 
   console.log(vals);
 
-/**
+  /**
  * {
   "type": "Feature",
   "geometry": {
@@ -98,20 +91,20 @@ function DeviceWorldMap(props) {
   console.log(data);
 
   return (
-      <ReactMapGL
-        {...viewport}
-        width="100%"
-        height="100%"
-        mapStyle="mapbox://styles/mapbox/dark-v9"
-        onViewportChange={_onViewportChange}
-        mapboxApiAccessToken={MAPBOX_TOKEN}
-      >
-        {data && (
-          <Source type="geojson" data={geoJson}>
-            <Layer {...heatmapLayer} />
-          </Source>
-        )}
-      </ReactMapGL>
+    <ReactMapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      mapStyle="mapbox://styles/mapbox/dark-v9"
+      onViewportChange={_onViewportChange}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    >
+      {data && (
+        <Source type="geojson" data={geoJson}>
+          <Layer {...heatmapLayer} />
+        </Source>
+      )}
+    </ReactMapGL>
   );
 }
 

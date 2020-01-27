@@ -76,7 +76,7 @@ class DeviceGrid extends React.Component {
           <DeviceDNSTable device={device} />
         </div>
         <div className={classes.bottomrow} key="world-map">
-          <DeviceWorldMap device={device}/>
+          <DeviceWorldMap device={device} />
         </div>
       </ResponsiveGridLayout>
     );
