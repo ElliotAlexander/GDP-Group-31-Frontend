@@ -35,13 +35,22 @@ const useStyles = makeStyles(() => ({
   listIcon: {
     marginRight: '10px',
   },
-  dot: {
+  dotGreen: {
     float: 'left',
     height: '12px',
     width: '12px',
     borderRadius: '50%',
     padding: '0px',
     backgroundColor: 'green',
+    paddingLeft: '5px',
+  },
+  dotRed: {
+    float: 'left',
+    height: '12px',
+    width: '12px',
+    borderRadius: '50%',
+    padding: '0px',
+    backgroundColor: 'red',
     paddingLeft: '5px',
   },
   navElem: {
@@ -56,12 +65,36 @@ const useStyles = makeStyles(() => ({
 }));
 
 const activeTooltipText = 'Device is currently active.';
+const inactiveTooltipText = 'Device is not currently active.';
 const deviceMacAdddressText =
   'Device Mac address. All network devices are identified by a manufacturer assigned MAC address, unique to every device. We use this to track each device.';
 
 export default function ListElement(props) {
   const { drawerWidth, action, ...device } = props;
   const classes = useStyles();
+
+  const checkDeviceStatus = () => {
+    if (
+      new Date().getTime() - new Date(device.devices.lastSeen).getTime() <
+      60000
+    ) {
+      return (
+        <Tooltip title={activeTooltipText}>
+          <span className={classes.dotGreen} />
+        </Tooltip>
+      );
+    }
+    return (
+      <Tooltip
+        title={
+          inactiveTooltipText +
+          `Last seen at ${new Date(device.devices.lastSeen).toUTCString()}`
+        }
+      >
+        <span className={classes.dotRed} />
+      </Tooltip>
+    );
+  };
 
   return (
     <Link style={{ textDecoration: 'none', color: 'white' }} to="/device">
@@ -79,7 +112,9 @@ export default function ListElement(props) {
                 className={classes.listElementText}
                 style={{ width: '150px' }}
               >
-                {device.devices.deviceHostname}
+                {device.devices.deviceHostname === ''
+                  ? device.devices.deviceHostname
+                  : device.devices.internalIpV4}
               </h4>
             </Tooltip>
           </div>
@@ -89,11 +124,7 @@ export default function ListElement(props) {
                 <h5>{device.devices.macAddr}</h5>
               </Tooltip>
             </li>
-            <li className={classes.listElem}>
-              <Tooltip title={activeTooltipText}>
-                <span className={classes.dot}></span>
-              </Tooltip>
-            </li>
+            <li className={classes.listElem}>{checkDeviceStatus(device)}</li>
           </ul>
         </div>
       </ListItem>

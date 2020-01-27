@@ -76,11 +76,13 @@ function DataUpDownLivePanel(props) {
             </ListItemIcon>
             <ListItemText
               primary={
-                convertBytesToHumanReadable(
-                  (data.allDeviceStatsOverTimes.edges[0].node.dataOut -
-                    data.allDeviceStatsOverTimes.edges[1].node.dataOut) /
-                    10,
-                ) + '/s'
+                data.allDeviceStatsOverTimes.edges.length >= 2
+                  ? convertBytesToHumanReadable(
+                      (data.allDeviceStatsOverTimes.edges[0].node.dataOut -
+                        data.allDeviceStatsOverTimes.edges[1].node.dataOut) /
+                        10,
+                    ) + '/s'
+                  : 'N/A'
               }
             />
           </ListItem>
@@ -92,11 +94,13 @@ function DataUpDownLivePanel(props) {
             </ListItemIcon>
             <ListItemText
               primary={
-                convertBytesToHumanReadable(
-                  (data.allDeviceStatsOverTimes.edges[0].node.dataIn -
-                    data.allDeviceStatsOverTimes.edges[1].node.dataIn) /
-                    10,
-                ) + '/s'
+                data.allDeviceStatsOverTimes.edges.length >= 2
+                  ? convertBytesToHumanReadable(
+                      (data.allDeviceStatsOverTimes.edges[0].node.dataIn -
+                        data.allDeviceStatsOverTimes.edges[1].node.dataIn) /
+                        10,
+                    ) + '/s'
+                  : 'N/A'
               }
             />
           </ListItem>
