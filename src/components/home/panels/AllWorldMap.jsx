@@ -55,6 +55,8 @@ export default class AllWorldMap extends Component {
         if (!error) {
           // Note: In a real application you would do a validation of JSON data before doing anything with it,
           // but for demonstration purposes we ingore this part here and just trying to select needed data...
+
+          console.log(response);
           const { features } = response;
           const endTime = features[0].properties.time;
           const startTime = features[features.length - 1].properties.time;
@@ -79,6 +81,7 @@ export default class AllWorldMap extends Component {
       this.setState({
         data: filterFeaturesByDay(this.state.earthquakes, time),
       });
+      console.log(this.state.data);
     }
   };
 
