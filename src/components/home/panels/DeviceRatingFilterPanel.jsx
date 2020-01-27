@@ -49,7 +49,7 @@ const DEVICE_LIST_QUERY = gql`
   }
 `;
 
-const tooltipText = 'coolios';
+const tooltipText = 'Device state based on security rating.';
 
 function DeviceRatingFilterPanel() {
   const classes = useStyles();
