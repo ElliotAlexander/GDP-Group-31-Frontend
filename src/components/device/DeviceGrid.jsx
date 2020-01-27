@@ -6,6 +6,7 @@ import DeviceTransferredGraph from './panels/DeviceTransferredGraph';
 import DeviceIPAddress from './panels/IPAddressPanel';
 import DeviceDNSTable from './panels/DeviceDNSTable';
 import DataUpDownPanel from './panels/DataUpDownPanel';
+import HttpPieChart from './panels/HttpPieChart';
 import DataUpDownLivePanel from './panels/DataUpDownLivePanel';
 import DeviceInfoTable from './panels/DeviceInfoTable';
 
@@ -62,7 +63,7 @@ class DeviceGrid extends React.Component {
           <DataUpDownLivePanel device={device} />
         </div>
         <div className={classes.middlerow} key="at-risk">
-          Security rating timeline
+          <HttpPieChart device={device} />
         </div>
         <div className={classes.middlerow} key="device-info">
           <DeviceTransferredGraph device={device} />

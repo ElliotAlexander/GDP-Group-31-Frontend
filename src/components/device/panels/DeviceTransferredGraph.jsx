@@ -10,7 +10,7 @@ const ON_RENDER_QUERY = gql`
   query MyQuery($uuid: String!) {
     allDeviceStatsOverTimes(
       condition: { uuid: $uuid }
-      first: 10
+      last: 10
       orderBy: TIMESTAMP_ASC
     ) {
       edges {
@@ -64,7 +64,9 @@ function DeviceTransferredGraph(props) {
   const dataPoints = [];
   for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
     timestamps.push(
-      new Date(data.allDeviceStatsOverTimes.edges[i].node.timestamp).getTime(),
+      new Date(
+          data.allDeviceStatsOverTimes.edges[i].node.timestamp,
+        ).toUTCString(),
     );
     dataPoints.push(
       parseFloat(
@@ -104,6 +106,7 @@ function DeviceTransferredGraph(props) {
             {
               ticks: {
                 fontColor: 'white',
+                display: false,
               },
             },
           ],
