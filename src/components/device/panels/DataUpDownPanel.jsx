@@ -38,6 +38,7 @@ function DataUpDownPanel(props) {
       uuid,
     },
     skip: !uuid,
+    polling: 5000,
   });
 
   const convertBytesToHumanReadable = byteCount => {

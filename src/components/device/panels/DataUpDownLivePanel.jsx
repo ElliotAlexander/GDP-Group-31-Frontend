@@ -2,19 +2,32 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Typography, Box, Paper, Tooltip } from '@material-ui/core';
+import { Paper, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles({});
 
 const DEVICE_DATA_QUERY = gql`
-  query UpDownData($uuid: String!) {
-    deviceStatByUuid(uuid: $uuid) {
-      httpsPacketCount
-      dataTransferred
-      dataOut
-      dataIn
+  query UpDownDataInitial($uuid: String!) {
+    allDeviceStatsOverTimes(
+      condition: { uuid: $uuid }
+      first: 2
+      orderBy: TIMESTAMP_DESC
+    ) {
+      edges {
+        node {
+          dataOut
+          dataIn
+          dataTransferred
+        }
+      }
     }
   }
 `;
@@ -36,10 +49,11 @@ function DataUpDownLivePanel(props) {
   const classes = useStyles();
   const { device } = props;
   const { uuid } = device;
+
   const { data, loading, error } = useQuery(DEVICE_DATA_QUERY, {
     variables: { uuid },
     skip: !uuid,
-    pollInterval: 500,
+    pollInterval: 5000,
   });
 
   if (loading)
@@ -51,17 +65,43 @@ function DataUpDownLivePanel(props) {
       </p>
     );
   }
-
+  console.log(data);
   return (
     <Paper className={classes.root}>
-      <Tooltip title="tbc" arrow>
-        <Box display="flex" width="100%" height="100%">
-          <Typography component="h1" variant="h6" align="center" noWrap>
-            In: {convertBytesToHumanReadable(data.deviceStatByUuid.dataIn)}
-            Out: {convertBytesToHumanReadable(data.deviceStatByUuid.dataOut)}
-          </Typography>
-        </Box>
-      </Tooltip>
+      <List component="nav" aria-label="main mailbox folders">
+        <Tooltip title="Temp" arrow>
+          <ListItem>
+            <ListItemIcon>
+              <ArrowUpwardIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                convertBytesToHumanReadable(
+                  (data.allDeviceStatsOverTimes.edges[0].node.dataOut -
+                    data.allDeviceStatsOverTimes.edges[1].node.dataOut) /
+                    10,
+                ) + '/s'
+              }
+            />
+          </ListItem>
+        </Tooltip>
+        <Tooltip title="Temp" arrow>
+          <ListItem>
+            <ListItemIcon>
+              <ArrowDownwardIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                convertBytesToHumanReadable(
+                  (data.allDeviceStatsOverTimes.edges[0].node.dataIn -
+                    data.allDeviceStatsOverTimes.edges[1].node.dataIn) /
+                    10,
+                ) + '/s'
+              }
+            />
+          </ListItem>
+        </Tooltip>
+      </List>
     </Paper>
   );
 }
