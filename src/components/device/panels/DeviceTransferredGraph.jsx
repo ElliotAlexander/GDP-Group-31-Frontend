@@ -65,10 +65,8 @@ function DeviceTransferredGraph(props) {
   for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
     timestamps.push(
       new Date(
-        new Date(
           data.allDeviceStatsOverTimes.edges[i].node.timestamp,
-        ).getTime(),
-      ).toUTCString(),
+        ).toUTCString(),
     );
     dataPoints.push(
       parseFloat(
