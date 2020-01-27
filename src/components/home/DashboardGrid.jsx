@@ -59,7 +59,7 @@ class DashboardGrid extends React.Component {
           <DataInOutGraph />
         </div>
         <div className={classes.b} key="e">
-          World Map
+          <AllWorldMap />
         </div>
         <div key="f">
           <DevicesInfoTable />
