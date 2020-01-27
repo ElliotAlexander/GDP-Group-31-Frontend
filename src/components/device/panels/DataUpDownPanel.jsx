@@ -11,7 +11,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import { useSubscription } from 'react-apollo-hooks';
 
 const DEVICE_DATA_QUERY = gql`
   query UpDownData($uuid: String!) {
@@ -30,44 +29,30 @@ const dataDownTooltipText = 'Data downloaded by the selected device.';
 
 const dataUpTooltipText = 'Data uploaded by the selected device.';
 
-function convertBytesToHumanReadable(byteCount) {
-  if (byteCount < 1000) {
-    return `${byteCount} Bytes`;
-  }
-
-  const KbCount = byteCount / 1000;
-  if (KbCount > 1000) {
-    const MbCount = Math.round((KbCount / 1000) * 100) / 100;
-    return `${MbCount} Mb`;
-  }
-  const KbCountRounded = Math.round(KbCount * 100) / 100;
-  return `${KbCountRounded} Kb`;
-}
-
 function DataUpDownPanel(props) {
   const classes = useStyles();
   const { device } = props;
   const { uuid } = device;
-  const { data, loading, error } = {};
-
-  const { refetch } = useQuery(DEVICE_DATA_QUERY, {
+  const { data, loading, error } = useQuery(DEVICE_DATA_QUERY, {
     variables: {
       uuid,
     },
     skip: !uuid,
-    onCompleted: data => {
-      console.log(data);
-      this.data = data;
-    },
-    onLoading: loading => {
-      console.log(loading);
-      this.loading = loading;
-    },
-    onError: err => {
-      console.log(err);
-      this.err = err;
-    },
   });
+
+  const convertBytesToHumanReadable = byteCount => {
+    if (byteCount < 1000) {
+      return `${byteCount} Bytes`;
+    }
+
+    const KbCount = byteCount / 1000;
+    if (KbCount > 1000) {
+      const MbCount = Math.round((KbCount / 1000) * 100) / 100;
+      return `${MbCount} Mb`;
+    }
+    const KbCountRounded = Math.round(KbCount * 100) / 100;
+    return `${KbCountRounded} Kb`;
+  };
 
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;
@@ -77,14 +62,6 @@ function DataUpDownPanel(props) {
         Error :(
       </p>
     );
-
-  const dataOutFormatted = convertBytesToHumanReadable(
-    data.deviceStatByUuid.dataOut,
-  );
-  const dataInFormatted = convertBytesToHumanReadable(
-    data.deviceStatByUuid.dataIn,
-  );
-
   return (
     <Paper className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
@@ -93,7 +70,11 @@ function DataUpDownPanel(props) {
             <ListItemIcon>
               <ArrowUpwardIcon />
             </ListItemIcon>
-            <ListItemText primary={dataInFormatted} />
+            <ListItemText
+              primary={convertBytesToHumanReadable(
+                data.deviceStatByUuid.dataOut,
+              )}
+            />
           </ListItem>
         </Tooltip>
         <Tooltip title={dataDownTooltipText} arrow>
@@ -101,7 +82,11 @@ function DataUpDownPanel(props) {
             <ListItemIcon>
               <ArrowDownwardIcon />
             </ListItemIcon>
-            <ListItemText primary={dataOutFormatted} />
+            <ListItemText
+              primary={convertBytesToHumanReadable(
+                data.deviceStatByUuid.dataIn,
+              )}
+            />
           </ListItem>
         </Tooltip>
       </List>

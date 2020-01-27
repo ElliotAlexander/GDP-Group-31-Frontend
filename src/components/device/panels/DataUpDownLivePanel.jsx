@@ -45,7 +45,6 @@ function DataUpDownLivePanel(props) {
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;
   if (error) {
-    console.log(error);
     return (
       <p id="error" className={classes.load}>
         Error :(

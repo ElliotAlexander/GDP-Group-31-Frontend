@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import DeviceIPAddress from './panels/IPAddressPanel';
 import DeviceDNSTable from './panels/DeviceDNSTable';
 import DataUpDownPanel from './panels/DataUpDownPanel';
+import DataUpDownLivePanel from './panels/DataUpDownLivePanel';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -37,6 +38,8 @@ class DeviceGrid extends React.Component {
         { i: 'world-map', x: 2, y: 7, w: 2, h: 7, static: true },
       ],
     };
+
+    console.log(device);
     return (
       <ResponsiveGridLayout
         className="layout"
@@ -55,7 +58,7 @@ class DeviceGrid extends React.Component {
           IPs Connected
         </div>
         <div className={classes.toprow} key="dunno">
-          ??????
+          <DataUpDownLivePanel device={device} />
         </div>
         <div className={classes.middlerow} key="at-risk">
           Security rating timeline
