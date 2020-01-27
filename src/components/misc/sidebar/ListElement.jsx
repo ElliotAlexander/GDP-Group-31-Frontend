@@ -64,7 +64,7 @@ export default function ListElement(props) {
   const classes = useStyles();
 
   return (
-    <Link style={{ textDecoration: 'none', color: 'black' }} to="/device">
+    <Link style={{ textDecoration: 'none', color: 'white' }} to="/device">
       <ListItem
         button
         key={device.devices.deviceHostname}

@@ -103,7 +103,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.custom.backdrop,
   },
   listElement: {
-    backgroundColor: 'white',
     marginBottom: '2px',
   },
   title: {
