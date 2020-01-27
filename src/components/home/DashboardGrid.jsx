@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import DevicesInfoTable from './panels/DeviceInfoTable';
 import DevicesConnected from './panels/DevicesConnected';
+import DataUpDownPanel from './panels/DataUpDownPanel';
+import DeviceRatingFilterPanel from './panels/DeviceRatingFilterPanel';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -43,14 +45,14 @@ class DashboardGrid extends React.Component {
         cols={{ lg: 6, md: 6, sm: 6, xs: 1, xxs: 1 }}
         rowHeight={50}
       >
-        <div className={classes.a} key="a">
-          a
+        <div key="a">
+          <DeviceRatingFilterPanel />
         </div>
-        <div className={classes.a} key="b">
+        <div key="b">
           <DevicesConnected />
         </div>
-        <div className={classes.a} key="c">
-          c
+        <div key="c">
+          <DataUpDownPanel />
         </div>
         <div className={classes.b} key="d">
           Data in/out graph
@@ -58,7 +60,7 @@ class DashboardGrid extends React.Component {
         <div className={classes.b} key="e">
           World Map
         </div>
-        <div className={classes.c} key="f">
+        <div key="f">
           <DevicesInfoTable />
         </div>
         <div className={classes.c} key="g">

@@ -2,18 +2,19 @@ import React from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
+import DeviceTransferredGraph from './panels/DeviceTransferredGraph';
 import DeviceIPAddress from './panels/IPAddressPanel';
 import DeviceDNSTable from './panels/DeviceDNSTable';
 import DataUpDownPanel from './panels/DataUpDownPanel';
 import DataUpDownLivePanel from './panels/DataUpDownLivePanel';
+import DeviceInfoTable from './panels/DeviceInfoTable';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const useStyles = () => ({
   toprow: {},
   middlerow: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#424242',
   },
   bottomrow: {
     backgroundColor: 'pink',
@@ -64,9 +65,11 @@ class DeviceGrid extends React.Component {
           Security rating timeline
         </div>
         <div className={classes.middlerow} key="device-info">
-          Device Info Table
+          <DeviceTransferredGraph device={device} />
         </div>
-        <div className={classes.middlerow} key="http-packets"></div>
+        <div className={classes.middlerow} key="http-packets">
+          <DeviceInfoTable device={device} />
+        </div>
         <div key="timeline">
           <DeviceDNSTable device={device} />
         </div>
