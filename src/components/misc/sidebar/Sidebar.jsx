@@ -4,8 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
+import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -101,11 +103,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.custom.backdrop,
   },
   listElement: {
-    backgroundColor: 'white',
     marginBottom: '2px',
   },
   title: {
     flexGrow: 1,
+    color: 'white',
   },
 }));
 
@@ -162,8 +164,12 @@ function Sidebar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Dashboard
+            <Typography className={classes.title}>
+              <Link to="/">
+                <IconButton aria-label="menu">
+                  <HomeIcon />
+                </IconButton>
+              </Link>
             </Typography>
             <div>
               <IconButton
