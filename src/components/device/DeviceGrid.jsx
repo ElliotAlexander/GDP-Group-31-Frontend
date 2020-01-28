@@ -9,6 +9,7 @@ import DataUpDownPanel from './panels/DataUpDownPanel';
 import HttpPieChart from './panels/HttpPieChart';
 import DataUpDownLivePanel from './panels/DataUpDownLivePanel';
 import DeviceInfoTable from './panels/DeviceInfoTable';
+import DeviceWorldMap from './panels/DeviceWorldMap';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -74,7 +75,7 @@ class DeviceGrid extends React.Component {
           <DeviceDNSTable device={device} />
         </div>
         <div className={classes.bottomrow} key="world-map">
-          World Map
+          <DeviceWorldMap device={device} />
         </div>
       </ResponsiveGridLayout>
     );

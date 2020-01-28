@@ -64,7 +64,9 @@ function sumOutDataFromAllDevices(data) {
 
 function DataUpDownPanel() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(DEVICES_DATA_QUERY);
+  const { loading, error, data } = useQuery(DEVICES_DATA_QUERY, {
+    pollInterval: 5000,
+  });
 
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;

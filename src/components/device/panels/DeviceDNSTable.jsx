@@ -25,6 +25,7 @@ const DEVICE_LIST_QUERY = gql`
   }
 `;
 
+
 function DeviceDNSTable(props) {
   const classes = useStyles();
   const { device } = props;
