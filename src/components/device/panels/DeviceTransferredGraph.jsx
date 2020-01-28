@@ -63,18 +63,21 @@ function DeviceTransferredGraph(props) {
   const timestamps = [];
   const dataPoints = [];
   for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
-    timestamps.push(
-      new Date(
+    if (i > 0) {
+      timestamps.push(
+        new Date(
           data.allDeviceStatsOverTimes.edges[i].node.timestamp,
         ).toUTCString(),
-    );
-    dataPoints.push(
-      parseFloat(
-        convertBytesToHumanReadable(
-          data.allDeviceStatsOverTimes.edges[i].node.dataTransferred,
+      );
+      dataPoints.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceStatsOverTimes.edges[i].node.dataTransferred -
+              data.allDeviceStatsOverTimes.edges[i - 1].node.dataTransferred,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
   const data5 = {
     labels: timestamps,

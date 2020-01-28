@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import PropTypes from 'prop-types';
 import HomeIcon from '@material-ui/icons/Home';
@@ -20,7 +20,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
+import CreateIcon from '@material-ui/icons/Create';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import ListElement from './ListElement';
 
@@ -39,6 +46,18 @@ const DEVICE_LIST_QUERY = gql`
         internalIpV4
         uuid
         lastSeen
+      }
+    }
+  }
+`;
+
+const DEVICE_NICKNAME_UPDATE_MUTATION = gql`
+  mutation DeviceNicknameUpdateMutation($uuid: String!, $nickname: String!) {
+    updateDeviceByUuid(
+      input: { devicePatch: { deviceNickname: $nickname }, uuid: $uuid }
+    ) {
+      device {
+        deviceNickname
       }
     }
   }
@@ -120,14 +139,25 @@ function mapStateToProps(state) {
 
 function Sidebar(props) {
   const classes = useStyles();
-  const { children, dispatch } = props;
+  const { children, dispatch, device } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
     pollInterval: 5000,
   });
   const [open, setOpen] = React.useState(false);
+  const [editTextOpen, setEditTextOpen] = React.useState(false);
+  const [deviceNicknameField, setDeviceNicknameField] = React.useState();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const client = useApolloClient();
   const openPopup = Boolean(anchorEl);
+
+  const handleDialogOpen = () => {
+    setEditTextOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setEditTextOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,6 +177,25 @@ function Sidebar(props) {
 
   const logoutUser = () => {
     dispatch(logout());
+  };
+
+  const updateDeviceNickname = () => {
+    client
+      .mutate({
+        mutation: DEVICE_NICKNAME_UPDATE_MUTATION,
+        variables: {
+          uuid: device.device.uuid,
+          nickname: deviceNicknameField,
+        },
+      })
+      .then(result => {
+        device.device.deviceNickname =
+          result.data.updateDeviceByUuid.device.deviceNickname;
+        handleDialogClose();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   if (loading) return <CircularProgress />;
@@ -176,7 +225,29 @@ function Sidebar(props) {
                 </IconButton>
               </Link>
             </Typography>
+            {device.device ? (
+              <Typography className={classes.title}>
+                {device.device.deviceNickname !== 'not set'
+                  ? device.device.deviceNickname
+                  : device.device.deviceHostname}
+              </Typography>
+            ) : (
+              <div />
+            )}
             <div>
+              {device.device ? (
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleDialogOpen}
+                  color="inherit"
+                >
+                  <CreateIcon />
+                </IconButton>
+              ) : (
+                <div />
+              )}
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -230,13 +301,13 @@ function Sidebar(props) {
           </div>
           <Divider />
           <List className={classes.deviceList}>
-            {data.allDevices.nodes.map(device => (
-              <div className={classes.listElement} key={device.uuid}>
+            {data.allDevices.nodes.map(deviceMap => (
+              <div className={classes.listElement} key={deviceMap.uuid}>
                 <ListElement
                   drawerWidth={drawerWidth}
-                  devices={device}
+                  devices={deviceMap}
                   action={() => {
-                    dispatch(setDevice(device));
+                    dispatch(setDevice(deviceMap));
                   }}
                 />
               </div>
@@ -244,6 +315,37 @@ function Sidebar(props) {
           </List>
         </Drawer>
       </div>
+      <Dialog
+        open={editTextOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Edit Device</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter a nickname for the currently chosen device below, and click
+            &apos;Set Nickname&apos; to set the nickname for this device. This
+            nickname will persist until changed.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Device Nickname"
+            type="name"
+            fullWidth
+            onChange={e => setDeviceNicknameField(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="white">
+            Cancel
+          </Button>
+          <Button onClick={updateDeviceNickname} color="white">
+            Set Nickname
+          </Button>
+        </DialogActions>
+      </Dialog>
       {children}
     </div>
   );
@@ -252,6 +354,9 @@ function Sidebar(props) {
 Sidebar.propTypes = {
   children: PropTypes.shape({}),
   dispatch: PropTypes.func.isRequired,
+  device: PropTypes.shape({
+    device: PropTypes.object,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(Sidebar);
