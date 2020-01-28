@@ -50,44 +50,52 @@ function DataInOutGraph() {
         Error :(
       </p>
     );
-  console.log(data);
   const timestamps = [];
   const dataPointsDataTransferred = [];
   for (let i = 0; i < data.allDeviceDataSumOverTimes.edges.length; i += 1) {
-    timestamps.push(
-      new Date(
-        data.allDeviceDataSumOverTimes.edges[i].node.timestamp,
-      ).getTime(),
-    );
-    dataPointsDataTransferred.push(
-      parseFloat(
-        convertBytesToHumanReadable(
-          data.allDeviceDataSumOverTimes.edges[i].node.dataTransferred,
+    if (i > 0) {
+      timestamps.push(
+        new Date(
+          data.allDeviceDataSumOverTimes.edges[i].node.timestamp,
+        ).getTime(),
+      );
+      dataPointsDataTransferred.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceDataSumOverTimes.edges[i].node.dataTransferred -
+              data.allDeviceDataSumOverTimes.edges[i - 1].node.dataTransferred,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   const dataPointsDataIn = [];
   for (let i = 0; i < data.allDeviceDataSumOverTimes.edges.length; i += 1) {
-    dataPointsDataIn.push(
-      parseFloat(
-        convertBytesToHumanReadable(
-          data.allDeviceDataSumOverTimes.edges[i].node.dataIn,
+    if (i > 0) {
+      dataPointsDataIn.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceDataSumOverTimes.edges[i].node.dataIn -
+              data.allDeviceDataSumOverTimes.edges[i - 1].node.dataIn,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   const dataPointsDataOut = [];
   for (let i = 0; i < data.allDeviceDataSumOverTimes.edges.length; i += 1) {
-    dataPointsDataOut.push(
-      parseFloat(
-        convertBytesToHumanReadable(
-          data.allDeviceDataSumOverTimes.edges[i].node.dataOut,
+    if (i > 0) {
+      dataPointsDataOut.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceDataSumOverTimes.edges[i].node.dataOut -
+              data.allDeviceDataSumOverTimes.edges[i - 1].node.dataOut,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   const data5 = {
