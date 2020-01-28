@@ -42,7 +42,6 @@ class DeviceGrid extends React.Component {
       ],
     };
 
-    console.log(device);
     return (
       <ResponsiveGridLayout
         className="layout"
