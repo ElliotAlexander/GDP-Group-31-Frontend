@@ -17,6 +17,7 @@ import Dashboard from './components/home/Dashboard';
 import DeviceDashboard from './components/device/DeviceDashboard';
 import theme from './theming/theme.jsx';
 import LoginPage from './components/login/LoginPage';
+import ErrorPage from './components/404/404';
 
 function mapStateToProps(state) {
   return {
@@ -90,6 +91,7 @@ class App extends Component {
               <ThemeProvider theme={theme}>
                 <Route path="/" exact render={() => <Dashboard />} />
                 <Route path="/device" render={() => <DeviceDashboard />} />
+                <Route path="/error" render={() => <ErrorPage />} />
               </ThemeProvider>
             ) : (
               <LoginPage />
