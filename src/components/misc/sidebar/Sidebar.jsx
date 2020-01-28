@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -200,7 +200,7 @@ function Sidebar(props) {
 
   if (loading) return <CircularProgress />;
   if (error) {
-    return <p>Error - Sidebar failed to load. Error:</p>;
+    return <Redirect to="/error" />;
   }
 
   return (
