@@ -60,7 +60,7 @@ function DataInOutGraph() {
       timestamps.push(
         new Date(
           data.allDeviceDataSumOverTimes.edges[i].node.timestamp,
-        ).getTime(),
+        ).toUTCString(),
       );
       dataPointsDataTransferred.push(
         parseFloat(
