@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -139,10 +139,11 @@ function mapStateToProps(state) {
 
 function Sidebar(props) {
   const classes = useStyles();
-  const { children, dispatch, device } = props;
+  const { children, dispatch, device, location } = props;
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
     pollInterval: 5000,
   });
+
   const [open, setOpen] = React.useState(false);
   const [editTextOpen, setEditTextOpen] = React.useState(false);
   const [deviceNicknameField, setDeviceNicknameField] = React.useState();
@@ -203,6 +204,8 @@ function Sidebar(props) {
     return <Redirect to="/error" />;
   }
 
+  console.log(location);
+
   return (
     <div>
       <CssBaseline />
@@ -225,7 +228,7 @@ function Sidebar(props) {
                 </IconButton>
               </Link>
             </Typography>
-            {device.device ? (
+            {device.device && location.pathname === '/device' ? (
               <Typography className={classes.title}>
                 {device.device.deviceNickname !== 'not set'
                   ? device.device.deviceNickname
@@ -235,7 +238,7 @@ function Sidebar(props) {
               <div />
             )}
             <div>
-              {device.device ? (
+              {device.device && location.pathname === '/device' ? (
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
@@ -359,4 +362,6 @@ Sidebar.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps)(
+  withRouter(props => <Sidebar {...props} />),
+);
