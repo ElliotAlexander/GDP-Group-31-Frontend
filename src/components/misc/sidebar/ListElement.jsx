@@ -112,9 +112,9 @@ export default function ListElement(props) {
                 className={classes.listElementText}
                 style={{ width: '150px' }}
               >
-                {device.devices.deviceHostname === ''
+                {device.devices.deviceNickname === 'not set'
                   ? device.devices.deviceHostname
-                  : device.devices.internalIpV4}
+                  : device.devices.deviceNickname}
               </h4>
             </Tooltip>
           </div>

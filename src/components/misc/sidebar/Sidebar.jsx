@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import HomeIcon from '@material-ui/icons/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,9 +29,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import ListElement from './ListElement';
 
-import { setDevice } from '../../../misc/redux-actions/device-actions';
+import {
+  setDevice,
+  clearDevice,
+} from '../../../misc/redux-actions/device-actions';
 import { logout } from '../../../misc/redux-actions/authentication';
 
 export const drawerWidth = 240;
@@ -46,6 +51,7 @@ const DEVICE_LIST_QUERY = gql`
         internalIpV4
         uuid
         lastSeen
+        setIgnored
       }
     }
   }
@@ -58,6 +64,26 @@ const DEVICE_NICKNAME_UPDATE_MUTATION = gql`
     ) {
       device {
         deviceNickname
+      }
+    }
+  }
+`;
+
+const DEVICE_REMOVE_MUTATION = gql`
+  mutation DeviceRemove($uuid: String!) {
+    deleteDeviceFunction(input: { uuidToDelete: $uuid }) {
+      clientMutationId
+    }
+  }
+`;
+
+const DEVICE_IGNORE_MUTATION = gql`
+  mutation DEVICE_IGNORE_MUTATION($uuid: String!) {
+    updateDeviceByUuid(
+      input: { uuid: $uuid, devicePatch: { setIgnored: true } }
+    ) {
+      device {
+        currentlyActive
       }
     }
   }
@@ -198,6 +224,39 @@ function Sidebar(props) {
       });
   };
 
+  const removeDevice = () => {
+    client
+      .mutate({
+        mutation: DEVICE_REMOVE_MUTATION,
+        variables: {
+          uuid: device.device.uuid,
+        },
+      })
+      .then(() => {
+        handleDialogClose();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const ignoreDevice = () => {
+    client
+      .mutate({
+        mutation: DEVICE_IGNORE_MUTATION,
+        variables: {
+          uuid: device.device.uuid,
+        },
+      })
+      .then(() => {
+        handleDialogClose();
+        dispatch(clearDevice());
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   if (loading) return <CircularProgress />;
   if (error) {
     return <Redirect to="/error" />;
@@ -301,17 +360,19 @@ function Sidebar(props) {
           </div>
           <Divider />
           <List className={classes.deviceList}>
-            {data.allDevices.nodes.map(deviceMap => (
-              <div className={classes.listElement} key={deviceMap.uuid}>
-                <ListElement
-                  drawerWidth={drawerWidth}
-                  devices={deviceMap}
-                  action={() => {
-                    dispatch(setDevice(deviceMap));
-                  }}
-                />
-              </div>
-            ))}
+            {data.allDevices.nodes
+              .filter(x => !x.setIgnored)
+              .map(deviceMap => (
+                <div className={classes.listElement} key={deviceMap.uuid}>
+                  <ListElement
+                    drawerWidth={drawerWidth}
+                    devices={deviceMap}
+                    action={() => {
+                      dispatch(setDevice(deviceMap));
+                    }}
+                  />
+                </div>
+              ))}
           </List>
         </Drawer>
       </div>
@@ -338,6 +399,21 @@ function Sidebar(props) {
           />
         </DialogContent>
         <DialogActions>
+          <Button
+            color="secondary"
+            onClick={removeDevice}
+            startIcon={<DeleteIcon />}
+          >
+            Remove Device
+          </Button>
+          <Button
+            color="secondary"
+            onClick={ignoreDevice}
+            startIcon={<NotInterestedIcon />}
+          >
+            Ignore Device
+          </Button>
+          <div style={{ flex: '1 0 0' }} />
           <Button onClick={handleDialogClose} color="white">
             Cancel
           </Button>
@@ -359,4 +435,4 @@ Sidebar.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default withRouter(connect(mapStateToProps)(Sidebar));

@@ -27,8 +27,8 @@ const DEVICE_MAP_QUERY = gql`
 
 function DeviceWorldMap(props) {
   const [viewport, setViewport] = React.useState({
-    latitude: 40,
-    longitude: -100,
+    latitude: 51,
+    longitude: 0,
     zoom: 3,
     bearing: 0,
     pitch: 0,

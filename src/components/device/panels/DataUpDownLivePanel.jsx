@@ -49,7 +49,6 @@ function DataUpDownLivePanel(props) {
   const classes = useStyles();
   const { device } = props;
   const { uuid } = device;
-
   const { data, loading, error } = useQuery(DEVICE_DATA_QUERY, {
     variables: { uuid },
     skip: !uuid,
@@ -65,12 +64,12 @@ function DataUpDownLivePanel(props) {
       </p>
     );
   }
-  console.log(data);
+
   return (
     <Paper className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         <Tooltip title="Temp" arrow>
-          <ListItem>
+          <ListItem button>
             <ListItemIcon>
               <ArrowUpwardIcon />
             </ListItemIcon>

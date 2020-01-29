@@ -10,6 +10,7 @@ import HttpPieChart from './panels/HttpPieChart';
 import DataUpDownLivePanel from './panels/DataUpDownLivePanel';
 import DeviceInfoTable from './panels/DeviceInfoTable';
 import DeviceWorldMap from './panels/DeviceWorldMap';
+import TorDevicePanel from './panels/TorTrafficPanel';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -57,7 +58,7 @@ class DeviceGrid extends React.Component {
           <DataUpDownPanel device={device} />
         </div>
         <div className={classes.toprow} key="ip-count">
-          IPs Connected
+          <TorDevicePanel device={device} />
         </div>
         <div className={classes.toprow} key="dunno">
           <DataUpDownLivePanel device={device} />

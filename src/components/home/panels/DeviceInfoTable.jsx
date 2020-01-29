@@ -98,7 +98,9 @@ const DEVICE_LIST_QUERY = gql`
 
 export default function DevicesInfoTable() {
   const classes = useStyles();
-  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY);
+  const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
+    pollInterval: 5000,
+  });
 
   const setRating = rating => {
     if (rating > 0 && rating < 3) {
@@ -146,7 +148,11 @@ export default function DevicesInfoTable() {
             <TableBody>
               {data.allDevices.nodes.map(device => (
                 <TableRow key={device.uuid}>
-                  <StyledTableCell>{device.deviceNickname}</StyledTableCell>
+                  <StyledTableCell>
+                    {device.deviceNickname === 'not set'
+                      ? device.deviceHostname
+                      : device.deviceNickname}
+                  </StyledTableCell>
                   <StyledTableCell>{device.internalIpV4}</StyledTableCell>
                   <StyledTableCell>
                     <IconButton size="small">

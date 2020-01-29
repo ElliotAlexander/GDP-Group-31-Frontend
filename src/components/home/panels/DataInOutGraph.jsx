@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 
 const DEVICES_DATA_QUERY = gql`
   query MyQuery {
-    allDeviceDataSumOverTimes(orderBy: TIMESTAMP_ASC, last: 50) {
+    allDeviceDataSumOverTimes(orderBy: TIMESTAMP_ASC, last: 60) {
       edges {
         node {
           dataOut
@@ -60,7 +60,7 @@ function DataInOutGraph() {
       timestamps.push(
         new Date(
           data.allDeviceDataSumOverTimes.edges[i].node.timestamp,
-        ).getTime(),
+        ).toUTCString(),
       );
       dataPointsDataTransferred.push(
         parseFloat(
@@ -105,7 +105,7 @@ function DataInOutGraph() {
     labels: timestamps,
     datasets: [
       {
-        label: 'Data Transferred in Mb',
+        label: 'Data Transferred (Mb)',
         backgroundColor: 'rgba(255,99,132,0.2)',
         borderColor: 'rgba(255,99,132,1)',
         borderWidth: 1,
@@ -114,7 +114,7 @@ function DataInOutGraph() {
         data: dataPointsDataTransferred,
       },
       {
-        label: 'Data Downloaded in Mb',
+        label: 'Data Downloaded (Mb)',
         backgroundColor: 'rgba(255,140,0,0.2)',
         borderColor: 'rgba(255,140,0,1)',
         borderWidth: 1,
@@ -123,7 +123,7 @@ function DataInOutGraph() {
         data: dataPointsDataIn,
       },
       {
-        label: 'Data Uploaded in Mb',
+        label: 'Data Uploaded (Mb)',
         backgroundColor: 'rgba(126, 200, 80,0.2)',
         borderColor: 'rgba(126, 200, 80,1)',
         borderWidth: 1,
@@ -135,35 +135,37 @@ function DataInOutGraph() {
   };
 
   return (
-    <Line
-      data={data5}
-      options={{
-        backgroundColor: 'lightblue',
-        maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: 'white',
+    <div style={{ height: '100%' }}>
+      <Line
+        data={data5}
+        options={{
+          backgroundColor: 'lightblue',
+          maintainAspectRatio: false,
+          legend: {
+            labels: {
+              fontColor: 'white',
+            },
           },
-        },
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                fontColor: 'white',
-                display: false,
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: 'white',
+                  display: false,
+                },
               },
-            },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                fontColor: 'white',
+            ],
+            yAxes: [
+              {
+                ticks: {
+                  fontColor: 'white',
+                },
               },
-            },
-          ],
-        },
-      }}
-    />
+            ],
+          },
+        }}
+      />
+    </div>
   );
 }
 

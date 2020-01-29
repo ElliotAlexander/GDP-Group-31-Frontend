@@ -16,6 +16,8 @@ const ON_RENDER_QUERY = gql`
       edges {
         node {
           dataTransferred
+          dataIn
+          dataOut
           timestamp
         }
       }
@@ -59,9 +61,8 @@ function DeviceTransferredGraph(props) {
       </p>
     );
 
-  // data1 = processTimestampData(data.allDeviceStatsOverTimes);
   const timestamps = [];
-  const dataPoints = [];
+  const dataPointsDataTransferred = [];
   for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
     if (i > 0) {
       timestamps.push(
@@ -69,7 +70,7 @@ function DeviceTransferredGraph(props) {
           data.allDeviceStatsOverTimes.edges[i].node.timestamp,
         ).toUTCString(),
       );
-      dataPoints.push(
+      dataPointsDataTransferred.push(
         parseFloat(
           convertBytesToHumanReadable(
             data.allDeviceStatsOverTimes.edges[i].node.dataTransferred -
@@ -79,17 +80,64 @@ function DeviceTransferredGraph(props) {
       );
     }
   }
+
+  const dataPointsDataIn = [];
+  for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
+    if (i > 0) {
+      dataPointsDataIn.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceStatsOverTimes.edges[i].node.dataIn -
+              data.allDeviceStatsOverTimes.edges[i - 1].node.dataIn,
+          ),
+        ),
+      );
+    }
+  }
+
+  const dataPointsDataOut = [];
+  for (let i = 0; i < data.allDeviceStatsOverTimes.edges.length; i += 1) {
+    if (i > 0) {
+      dataPointsDataOut.push(
+        parseFloat(
+          convertBytesToHumanReadable(
+            data.allDeviceStatsOverTimes.edges[i].node.dataOut -
+              data.allDeviceStatsOverTimes.edges[i - 1].node.dataOut,
+          ),
+        ),
+      );
+    }
+  }
+
   const data5 = {
     labels: timestamps,
     datasets: [
       {
-        label: 'Data Transferred in Mb',
+        label: 'Data Transferred (Mb)',
         backgroundColor: 'rgba(255,99,132,0.2)',
         borderColor: 'rgba(255,99,132,1)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
-        data: dataPoints,
+        data: dataPointsDataTransferred,
+      },
+      {
+        label: 'Data Downloaded (Mb)',
+        backgroundColor: 'rgba(255,140,0,0.2)',
+        borderColor: 'rgba(255,140,0,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255,140,0,0.5)',
+        hoverBorderColor: 'rgba(255,140,0,1)',
+        data: dataPointsDataIn,
+      },
+      {
+        label: 'Data Uploaded (Mb)',
+        backgroundColor: 'rgba(126, 200, 80,0.2)',
+        borderColor: 'rgba(126, 200, 80,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(126, 200, 80,0.5)',
+        hoverBorderColor: 'rgba(126, 200, 80,1)',
+        data: dataPointsDataOut,
       },
     ],
   };

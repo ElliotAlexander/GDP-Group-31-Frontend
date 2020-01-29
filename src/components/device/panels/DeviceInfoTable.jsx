@@ -88,23 +88,8 @@ function DevicesInfoTable(props) {
   const { loading, error, data } = useQuery(DEVICE_LIST_QUERY, {
     variables: { uuid },
     skip: !uuid,
+    pollInterval: 5000,
   });
-
-  //   const setRating = rating => {
-  //     if (rating > 0 && rating < 3) {
-  //       return (
-  //         <FiberManualRecordIcon className={classes.green} fontSize="small" />
-  //       );
-  //     }
-
-  //     if (rating > 3 && rating < 6) {
-  //       return (
-  //         <FiberManualRecordIcon className={classes.yellow} fontSize="small" />
-  //       );
-  //     }
-
-  //     return <FiberManualRecordIcon className={classes.red} fontSize="small" />;
-  //   };
 
   if (loading)
     return <CircularProgress id="loading" className={classes.load} />;

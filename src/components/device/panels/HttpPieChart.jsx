@@ -33,6 +33,7 @@ function HttpPieChart(props) {
   const { loading, error, data } = useQuery(HTTP_QUERY, {
     variables: { uuid },
     skip: !uuid,
+    pollInterval: 5000,
   });
 
   if (loading)
@@ -45,7 +46,7 @@ function HttpPieChart(props) {
     );
 
   const graphData = [];
-  const graphLabels = ['HTTP', 'HTTPS'];
+  const graphLabels = ['HTTP Traffic', 'HTTPS Traffic'];
   graphData.push(httpPacketCount(data));
   graphData.push(data.deviceStatByUuid.httpsPacketCount);
   const data5 = {
@@ -60,42 +61,44 @@ function HttpPieChart(props) {
     ],
   };
   return (
-    <Pie
-      style={{ paddingTop: '100px' }}
-      data={data5}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: 'white',
-          },
-        },
-        tooltips: {
-          callbacks: {
-            // eslint-disable-next-line no-shadow
-            label(tooltipItem, data) {
-              const dataset = data.datasets[tooltipItem.datasetIndex];
-              // eslint-disable-next-line no-underscore-dangle
-              const meta = dataset._meta[Object.keys(dataset._meta)[0]];
-              const { total } = meta;
-              const currentValue = dataset.data[tooltipItem.index];
-              const percentage = parseFloat(
-                ((currentValue / total) * 100).toFixed(1),
-              );
-              return (
-                data.labels[tooltipItem.index] +
-                ': ' +
-                currentValue +
-                ' (' +
-                percentage +
-                '%)'
-              );
+    <div style={{ height: '100%', paddingBottom: '10px' }}>
+      <Pie
+        style={{ paddingTop: '100px' }}
+        data={data5}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            labels: {
+              fontColor: 'white',
             },
           },
-        },
-      }}
-    />
+          tooltips: {
+            callbacks: {
+              // eslint-disable-next-line no-shadow
+              label(tooltipItem, data) {
+                const dataset = data.datasets[tooltipItem.datasetIndex];
+                // eslint-disable-next-line no-underscore-dangle
+                const meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                const { total } = meta;
+                const currentValue = dataset.data[tooltipItem.index];
+                const percentage = parseFloat(
+                  ((currentValue / total) * 100).toFixed(1),
+                );
+                return (
+                  data.labels[tooltipItem.index] +
+                  ': ' +
+                  currentValue +
+                  ' (' +
+                  percentage +
+                  '%)'
+                );
+              },
+            },
+          },
+        }}
+      />
+    </div>
   );
 }
 
