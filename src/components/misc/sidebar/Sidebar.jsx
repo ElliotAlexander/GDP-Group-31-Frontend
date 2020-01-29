@@ -31,6 +31,9 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import PersonIcon from '@material-ui/icons/Person';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import BlockIcon from '@material-ui/icons/Block';
 import ListElement from './ListElement';
 
 import {
@@ -172,6 +175,7 @@ function Sidebar(props) {
   const [open, setOpen] = React.useState(false);
   const [editTextOpen, setEditTextOpen] = React.useState(false);
   const [deviceNicknameField, setDeviceNicknameField] = React.useState();
+  const [showIgnoredDevices, setShowIgnoredDevices] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const client = useApolloClient();
@@ -203,6 +207,10 @@ function Sidebar(props) {
 
   const logoutUser = () => {
     dispatch(logout());
+  };
+
+  const toggleIgnoredOn = () => {
+    setShowIgnoredDevices(!showIgnoredDevices);
   };
 
   const updateDeviceNickname = () => {
@@ -331,7 +339,20 @@ function Sidebar(props) {
                 open={openPopup}
                 onClose={handleClose}
               >
-                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                <MenuItem onClick={logoutUser}>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <Typography variant="inherit">Logout</Typography>
+                </MenuItem>
+                <MenuItem onClick={toggleIgnoredOn}>
+                  <ListItemIcon>
+                    <BlockIcon />
+                  </ListItemIcon>
+                  <Typography variant="inherit">
+                    {showIgnoredDevices ? 'Show' : 'Hide'} ignored devices
+                  </Typography>
+                </MenuItem>
               </Menu>
             </div>
           </Toolbar>
@@ -361,7 +382,7 @@ function Sidebar(props) {
           <Divider />
           <List className={classes.deviceList}>
             {data.allDevices.nodes
-              .filter(x => !x.setIgnored)
+              .filter(x => !(showIgnoredDevices && x.setIgnored))
               .map(deviceMap => (
                 <div className={classes.listElement} key={deviceMap.uuid}>
                   <ListElement
