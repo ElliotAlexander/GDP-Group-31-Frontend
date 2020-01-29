@@ -68,6 +68,8 @@ const activeTooltipText = 'Device is currently active.';
 const inactiveTooltipText = 'Device is not currently active.';
 const deviceMacAdddressText =
   'Device Mac address. All network devices are identified by a manufacturer assigned MAC address, unique to every device. We use this to track each device.';
+const deviceVendorText =
+  'This is the device vendor. We can track Vendors by the MAC addresses assigned to the devices they sell. Mac Addresses are unique to each device, and supplied by the manufacturer. Mac addresses are used to track devices.';
 
 export default function ListElement(props) {
   const { drawerWidth, action, ...device } = props;
@@ -120,8 +122,18 @@ export default function ListElement(props) {
           </div>
           <ul className={classes.navElem}>
             <li className={classes.listElem}>
-              <Tooltip title={deviceMacAdddressText}>
-                <h5>{device.devices.macAddr}</h5>
+              <Tooltip
+                title={
+                  device.devices.deviceType
+                    ? deviceVendorText
+                    : deviceMacAdddressText
+                }
+              >
+                <h5>
+                  {device.devices.deviceType
+                    ? device.devices.deviceType
+                    : device.devices.macAddr}
+                </h5>
               </Tooltip>
             </li>
             <li className={classes.listElem}>{checkDeviceStatus(device)}</li>

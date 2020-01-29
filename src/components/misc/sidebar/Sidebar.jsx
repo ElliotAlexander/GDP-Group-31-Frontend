@@ -51,6 +51,7 @@ const DEVICE_LIST_QUERY = gql`
         macAddr
         deviceNickname
         deviceHostname
+        deviceType
         internalIpV4
         uuid
         lastSeen
