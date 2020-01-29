@@ -25,7 +25,7 @@ const columns = [
   },
   {
     id: 'wire',
-    label: 'Wired/Wiredless',
+    label: 'Device Vendor',
     minWidth: 170,
     align: 'left',
     format: value => value.toLocaleString(),
@@ -160,7 +160,7 @@ export default function DevicesInfoTable() {
                       {setRating(6)}
                     </IconButton>
                   </StyledTableCell>
-                  <StyledTableCell>??</StyledTableCell>
+                  <StyledTableCell>{device.deviceType}</StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -77,10 +77,10 @@ function DataUpDownPanel() {
       </p>
     );
 
-  const dataOutFormatted = convertBytesToHumanReadable(
+  const dataUpFormatted = convertBytesToHumanReadable(
     sumOutDataFromAllDevices(data),
   );
-  const dataInFormatted = convertBytesToHumanReadable(
+  const dataDownFormatted = convertBytesToHumanReadable(
     sumInDataFromAllDevices(data),
   );
 
@@ -92,7 +92,7 @@ function DataUpDownPanel() {
             <ListItemIcon>
               <ArrowUpwardIcon />
             </ListItemIcon>
-            <ListItemText primary={dataInFormatted} />
+            <ListItemText primary={dataUpFormatted} />
           </ListItem>
         </Tooltip>
         <Tooltip title={dataDownTooltipText} arrow>
@@ -100,7 +100,7 @@ function DataUpDownPanel() {
             <ListItemIcon>
               <ArrowDownwardIcon />
             </ListItemIcon>
-            <ListItemText primary={dataOutFormatted} />
+            <ListItemText primary={dataDownFormatted} />
           </ListItem>
         </Tooltip>
       </List>

@@ -11,17 +11,7 @@ import DeviceWorldMap from './panels/DeviceWorldMap';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const useStyles = () => ({
-  a: {
-    backgroundColor: 'lightgray',
-  },
-  b: {
-    backgroundColor: 'pink',
-  },
-  c: {
-    backgroundColor: 'lightblue',
-  },
-});
+const useStyles = () => ({});
 
 class DashboardGrid extends React.Component {
   render() {
@@ -59,13 +49,13 @@ class DashboardGrid extends React.Component {
         <div key="d">
           <DataInOutGraph />
         </div>
-        <div className={classes.b} key="e">
+        <div key="e">
           <DeviceWorldMap />
         </div>
         <div key="f">
           <DevicesInfoTable />
         </div>
-        <div className={classes.c} key="g">
+        <div key="g">
           Security Rating Timeline
         </div>
       </ResponsiveGridLayout>

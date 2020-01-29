@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { Line } from 'react-chartjs-2';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles({
   container: {},
@@ -135,7 +136,7 @@ function DataInOutGraph() {
   };
 
   return (
-    <div style={{ height: '100%' }}>
+    <Paper style={{ height: '100%', padding: '10px' }}>
       <Line
         data={data5}
         options={{
@@ -165,7 +166,7 @@ function DataInOutGraph() {
           },
         }}
       />
-    </div>
+    </Paper>
   );
 }
 

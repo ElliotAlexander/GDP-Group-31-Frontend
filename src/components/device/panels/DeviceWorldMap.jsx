@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useQuery } from '@apollo/react-hooks';
 import { heatmapLayer } from './map-style';
+import { Paper } from '@material-ui/core';
 
 /* eslint-disable */
 
@@ -68,7 +69,8 @@ function DeviceWorldMap(props) {
   };
 
   return (
-    <ReactMapGL
+    <Paper style={{ height: '100%' }}>
+<ReactMapGL
       {...viewport}
       width="100%"
       height="100%"
@@ -82,6 +84,8 @@ function DeviceWorldMap(props) {
         </Source>
       )}
     </ReactMapGL>
+    </Paper>
+    
   );
 }
 
