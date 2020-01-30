@@ -25,8 +25,8 @@ class DashboardGrid extends React.Component {
         { i: 'd', x: 0, y: 2, w: 3, h: 6, static: true },
         { i: 'e', x: 3, y: 2, w: 3, h: 6, static: true },
 
-        { i: 'f', x: 0, y: 8, w: 4, h: 3, static: true },
-        { i: 'g', x: 4, y: 8, w: 2, h: 3, static: true },
+        { i: 'f', x: 0, y: 8, w: 4, h: 5, static: true },
+        { i: 'g', x: 4, y: 8, w: 2, h: 5, static: true },
       ],
     };
     return (
@@ -55,9 +55,7 @@ class DashboardGrid extends React.Component {
         <div key="f">
           <DevicesInfoTable />
         </div>
-        <div key="g">
-          Security Rating Timeline
-        </div>
+        <div key="g">Security Rating Timeline</div>
       </ResponsiveGridLayout>
     );
   }

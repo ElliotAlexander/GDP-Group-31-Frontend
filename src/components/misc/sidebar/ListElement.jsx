@@ -16,7 +16,6 @@ const useStyles = makeStyles(() => ({
   },
   listElement: {
     borderColor: '#000000',
-    borderLeft: '10px solid red',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
@@ -72,8 +71,21 @@ const deviceVendorText =
   'This is the device vendor. We can track Vendors by the MAC addresses assigned to the devices they sell. Mac Addresses are unique to each device, and supplied by the manufacturer. Mac addresses are used to track devices.';
 
 export default function ListElement(props) {
-  const { drawerWidth, action, ...device } = props;
+  const { drawerWidth, action, rating, ...device } = props;
+  const ratingObj = rating.length > 0 ? rating[0] : [];
   const classes = useStyles();
+
+  const generatePadding = () => {
+    if(ratingObj.overall < 0.5 ){
+      return '10px solid green';
+    }
+
+    if(ratingObj.overall < 0.9 && ratingObj.overall >= 0.5) {
+      return '10px solid yellow';
+    }
+
+    return '10px solid red';
+  }
 
   const checkDeviceStatus = () => {
     if (
@@ -104,6 +116,7 @@ export default function ListElement(props) {
         button
         key={device.devices.deviceHostname}
         className={classes.listElement}
+        style={{ borderLeft: generatePadding()}}
         onClick={action}
       >
         <div className={classes.elementRoot}>

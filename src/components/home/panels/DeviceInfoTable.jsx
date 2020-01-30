@@ -12,13 +12,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { Typography } from '@material-ui/core';
 
 const columns = [
   { id: 'name', label: 'Device\u00a0Name', minWidth: 170 },
   { id: 'ip', label: 'IP', minWidth: 170 },
   {
     id: 'rating',
-    label: 'Rating',
+    label: 'Security Rating',
     minWidth: 170,
     align: 'left',
     format: value => value.toLocaleString(),
@@ -44,7 +45,7 @@ const StyledTableCell = withStyles(theme => ({
 
 const useStyles = makeStyles({
   container: {
-    maxHeight: 170,
+    maxHeight: 250,
     '&::-webkit-scrollbar': {
       width: '0.4em',
     },
@@ -92,6 +93,13 @@ const DEVICE_LIST_QUERY = gql`
         deviceType
         uuid
       }
+    },
+    allDeviceSecurityRatings {
+        nodes {
+          overall
+          uuid
+        
+      }
     }
   }
 `;
@@ -102,20 +110,27 @@ export default function DevicesInfoTable() {
     pollInterval: 5000,
   });
 
-  const setRating = rating => {
-    if (rating > 0 && rating < 3) {
+  const setRating = uuid => {
+    const rating = data.allDeviceSecurityRatings.nodes.filter(x => x.uuid === uuid ).map(y => y.overall);
+    if(rating.length == 0){
+      return "Awaiting data..."; 
+    }
+
+    if (rating > 0 && rating < 0.5) {
       return (
-        <FiberManualRecordIcon className={classes.green} fontSize="small" />
+        <p style={{ color: 'green',  fontWeight: 'bold' }}>Safe</p>
       );
     }
 
-    if (rating > 3 && rating < 6) {
+    if (rating > 0.3 && rating < 0.75) {
       return (
-        <FiberManualRecordIcon className={classes.yellow} fontSize="small" />
+        <p style={{ color: 'yellow',  fontWeight: 'bold' }}>Concerning</p>
       );
     }
+    return (
+      <p style={{ color: 'red',  fontWeight: 'bold' }}>Critical</p>
 
-    return <FiberManualRecordIcon className={classes.red} fontSize="small" />;
+    )
   };
 
   if (loading)
@@ -155,10 +170,7 @@ export default function DevicesInfoTable() {
                   </StyledTableCell>
                   <StyledTableCell>{device.internalIpV4}</StyledTableCell>
                   <StyledTableCell>
-                    <IconButton size="small">
-                      {/* {setRating(device.rating)} */}
-                      {setRating(6)}
-                    </IconButton>
+                      {setRating(device.uuid)}
                   </StyledTableCell>
                   <StyledTableCell>{device.deviceType}</StyledTableCell>
                 </TableRow>

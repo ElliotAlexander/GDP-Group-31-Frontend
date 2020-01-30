@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { gql } from 'apollo-boost';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useQuery } from '@apollo/react-hooks';
-import { heatmapLayer } from './map-style';
 import { Paper } from '@material-ui/core';
+import { heatmapLayer } from './map-style';
 
 /* eslint-disable */
 
@@ -70,22 +70,21 @@ function DeviceWorldMap(props) {
 
   return (
     <Paper style={{ height: '100%' }}>
-<ReactMapGL
-      {...viewport}
-      width="100%"
-      height="100%"
-      mapStyle="mapbox://styles/mapbox/dark-v9"
-      onViewportChange={_onViewportChange}
-      mapboxApiAccessToken={MAPBOX_TOKEN}
-    >
-      {data && (
-        <Source type="geojson" data={geoJson}>
-          <Layer {...heatmapLayer} />
-        </Source>
-      )}
-    </ReactMapGL>
+      <ReactMapGL
+        {...viewport}
+        width="100%"
+        height="100%"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        onViewportChange={_onViewportChange}
+        mapboxApiAccessToken={MAPBOX_TOKEN}
+      >
+        {data && (
+          <Source type="geojson" data={geoJson}>
+            <Layer {...heatmapLayer} />
+          </Source>
+        )}
+      </ReactMapGL>
     </Paper>
-    
   );
 }
 

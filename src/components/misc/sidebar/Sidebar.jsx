@@ -58,6 +58,12 @@ const DEVICE_LIST_QUERY = gql`
         setIgnored
       }
     }
+    allDeviceSecurityRatings {
+      nodes {
+        overall
+        uuid
+      }
+    }
   }
 `;
 
@@ -389,6 +395,7 @@ function Sidebar(props) {
                   <ListElement
                     drawerWidth={drawerWidth}
                     devices={deviceMap}
+                    rating={data.allDeviceSecurityRatings.nodes.filter(x => x.uuid === deviceMap.uuid)}
                     action={() => {
                       dispatch(setDevice(deviceMap));
                     }}

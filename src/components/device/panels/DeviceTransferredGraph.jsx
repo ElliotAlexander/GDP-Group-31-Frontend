@@ -10,7 +10,7 @@ const ON_RENDER_QUERY = gql`
   query MyQuery($uuid: String!) {
     allDeviceStatsOverTimes(
       condition: { uuid: $uuid }
-      last: 10
+      last: 60
       orderBy: TIMESTAMP_ASC
     ) {
       edges {
