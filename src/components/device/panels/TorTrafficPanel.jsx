@@ -145,8 +145,6 @@ function TorDevicePanel(props) {
     };
   });
 
-  console.log(data);
-
   const dataPorts = [];
   const ports = data.allDeviceStats.edges[0].node.portsTraffic
     .split(',')
@@ -162,7 +160,6 @@ function TorDevicePanel(props) {
         warning: badPorts.includes(port),
       });
     });
-  console.log(dataPorts);
   const foundPorts = ports.length > 0;
 
   return (
@@ -199,7 +196,7 @@ function TorDevicePanel(props) {
               primary={
                 foundTraffic ? (
                   <Typography type="body2" style={{ color: '#ff6384' }}>
-                    Darkweb Traffic detected!
+                    Port Traffic Unavailable.
                   </Typography>
                 ) : (
                   <Typography type="body2" style={{ color: 'red' }}>

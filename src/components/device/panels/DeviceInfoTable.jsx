@@ -77,6 +77,14 @@ const DEVICE_LIST_QUERY = gql`
       lastSeen
       macAddr
       currentlyActive
+    },
+    allDeviceSecurityRatings(condition: {uuid: $uuid}) {
+      edges {
+        node {
+          overall
+          uuid
+        }
+      }
     }
   }
 `;
@@ -106,6 +114,21 @@ function DevicesInfoTable(props) {
   const lastSeenInMilliSeconds = Date.parse(data.deviceByUuid.lastSeen);
   const lastSeen = new Date(lastSeenInMilliSeconds);
 
+  const generateRating = (rating) => {
+    if(rating === undefined || rating === ''){
+      return 'No data';
+    }
+    if (rating <= 0.5) {
+      return 'Safe';
+    }
+
+    if (rating < 0.9 && rating > 0.5) {
+      return 'Concerning';
+    }
+    return 'Critical';
+  };
+
+
   return (
     <Paper>
       <div id="table">
@@ -129,8 +152,12 @@ function DevicesInfoTable(props) {
                 <StyledTableCell>{data.deviceByUuid.macAddr}</StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableHeadCell>Rating</StyledTableHeadCell>
-                <StyledTableCell>Rating</StyledTableCell>
+                <StyledTableHeadCell>Rating (0-1)</StyledTableHeadCell>
+                <StyledTableCell>{Math.round((parseFloat(data.allDeviceSecurityRatings.edges[0].node.overall) + Number.EPSILON) * 100) / 100}</StyledTableCell>
+              </TableRow>
+              <TableRow>
+                <StyledTableHeadCell>Rating (Overall)</StyledTableHeadCell>
+                <StyledTableCell>{generateRating(parseFloat(data.allDeviceSecurityRatings.edges[0].node.overall))}</StyledTableCell>
               </TableRow>
               <TableRow>
                 <StyledTableHeadCell>Device Type</StyledTableHeadCell>

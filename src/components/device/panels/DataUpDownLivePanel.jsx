@@ -32,6 +32,9 @@ const DEVICE_DATA_QUERY = gql`
   }
 `;
 
+const dataUploadedLast10Seconds = "The rate of data upload from a device over the last 10 seconds - note that this may have a slight delay over real conditions.";
+const dataDownloadedLast10Seconds = "The rate of data download from a device over the last 10 seconds - note that this may have a slight delay over real conditions.";
+
 function convertBytesToHumanReadable(byteCount) {
   if (byteCount < 1000) {
     return `${byteCount} Bytes`;
@@ -68,7 +71,7 @@ function DataUpDownLivePanel(props) {
   return (
     <Paper className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <Tooltip title="Temp" arrow>
+        <Tooltip title={dataUploadedLast10Seconds} arrow>
           <ListItem button>
             <ListItemIcon>
               <ArrowUpwardIcon />
@@ -86,7 +89,7 @@ function DataUpDownLivePanel(props) {
             />
           </ListItem>
         </Tooltip>
-        <Tooltip title="Temp" arrow>
+        <Tooltip title={dataDownloadedLast10Seconds} arrow>
           <ListItem>
             <ListItemIcon>
               <ArrowDownwardIcon />

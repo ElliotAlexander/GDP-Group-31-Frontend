@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
     borderColor: '#000000',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    borderLeft: '10px solid',
   },
   listElementText: {
     padding: '0px',
@@ -76,15 +77,17 @@ export default function ListElement(props) {
   const classes = useStyles();
 
   const generatePadding = () => {
-    if (ratingObj.overall < 0.5) {
-      return '10px solid green';
+    if(ratingObj.overall === undefined || ratingObj.overall === ''){
+      return '#000000';
+    }
+    if (ratingObj.overall <= 0.5) {
+      return 'rgba(126, 200, 80,0.5)';
     }
 
-    if (ratingObj.overall < 0.9 && ratingObj.overall >= 0.5) {
-      return '10px solid yellow';
+    if (ratingObj.overall < 0.9 && ratingObj.overall > 0.5) {
+      return 'rgba(255,140,0,0.5)';
     }
-
-    return '10px solid red';
+    return 'rgba(255,99,132,0.5';
   };
 
   const checkDeviceStatus = () => {
@@ -116,7 +119,7 @@ export default function ListElement(props) {
         button
         key={device.devices.deviceHostname}
         className={classes.listElement}
-        style={{ borderLeft: generatePadding() }}
+        style={{ borderColor: generatePadding() }}
         onClick={action}
       >
         <div className={classes.elementRoot}>

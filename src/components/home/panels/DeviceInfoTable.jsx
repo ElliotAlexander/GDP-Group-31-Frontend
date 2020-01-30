@@ -42,7 +42,7 @@ const StyledTableCell = withStyles(theme => ({
 
 const useStyles = makeStyles({
   container: {
-    maxHeight: 250,
+    maxHeight:350,
     '&::-webkit-scrollbar': {
       width: '0.4em',
     },
@@ -114,7 +114,7 @@ export default function DevicesInfoTable() {
       return 'Awaiting data...';
     }
 
-    if (rating > 0 && rating < 0.5) {
+    if (rating > 0 && rating <= 0.5) {
       return <p style={{ color: 'green', fontWeight: 'bold' }}>Safe</p>;
     }
 

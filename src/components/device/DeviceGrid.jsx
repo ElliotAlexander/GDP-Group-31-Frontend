@@ -43,6 +43,7 @@ class DeviceGrid extends React.Component {
       ],
     };
 
+
     return (
       <ResponsiveGridLayout
         className="layout"
@@ -52,7 +53,7 @@ class DeviceGrid extends React.Component {
         rowHeight={50}
       >
         <div className={classes.toprow} key="up-down">
-          <DeviceIPAddress device={device} />
+            <DeviceIPAddress device={device} />
         </div>
         <div className={classes.toprow} key="data">
           <DataUpDownPanel device={device} />

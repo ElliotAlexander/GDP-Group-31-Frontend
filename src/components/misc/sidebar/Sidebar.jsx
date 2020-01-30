@@ -403,7 +403,9 @@ function Sidebar(props) {
                     }}
                   />
                 </div>
-              ))}
+              ))
+              
+              }
           </List>
         </Drawer>
       </div>

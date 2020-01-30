@@ -41,9 +41,18 @@ const useStyles = makeStyles({
 const DEVICE_LIST_QUERY = gql`
   {
     allDevices {
-      nodes {
-        uuid
-        currentlyActive
+        nodes {
+          uuid
+          currentlyActive
+        }
+      
+    }, 
+    allDeviceSecurityRatings {
+      edges {
+        node {
+          overall
+          uuid
+        }
       }
     }
   }
@@ -53,29 +62,14 @@ const tooltipText = 'Device state based on security rating.';
 
 function DeviceRatingFilterPanel() {
   const classes = useStyles();
-  const { loading, error } = useQuery(DEVICE_LIST_QUERY);
+  const { data, loading, error } = useQuery(DEVICE_LIST_QUERY);
 
   if (loading) return <CircularProgress />;
   if (error) return <p>Error :(</p>;
 
-  // TO USE WITH REAL DATA
-  //   let greenDevices = 0;
-  //   let yellowDevices = 0;
-  //   let redDevices = 0;
-
-  //   for (let i = 0; i < data.allDeviceStats.nodes.length; i += 1) {
-  //     if (data.allDeviceStats.nodes[i].status === 'Fine') {
-  //       greenDevices += 1;
-  //     } else if (data.allDeviceStats.nodes[i].status === 'Warning') {
-  //       yellowDevices += 1;
-  //     } else if (data.allDeviceStats.nodes[i].status === 'Critical') {
-  //       redDevices += 1;
-  //     }
-  //   }
-
-  const greenDevices = 1;
-  const yellowDevices = 2;
-  const redDevices = 3;
+  const greenDevices =  data.allDeviceSecurityRatings.edges.filter(x => x.node.overall <= 0.5).length;
+  const yellowDevices = data.allDeviceSecurityRatings.edges.filter(x => (x.node.overall > 0.5) && (x.node.overall < 0.75)).length;
+  const redDevices = data.allDeviceSecurityRatings.edges.filter(x => x.node.overall >= 0.75).length;
 
   return (
     <Paper className={classes.root}>
