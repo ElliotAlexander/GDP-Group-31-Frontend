@@ -1,6 +1,5 @@
 import React from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import DevicesInfoTable from './panels/DeviceInfoTable';
 import DevicesConnected from './panels/DevicesConnected';
@@ -15,7 +14,6 @@ const useStyles = () => ({});
 
 class DashboardGrid extends React.Component {
   render() {
-    const { classes } = this.props;
     const layouts = {
       lg: [
         { i: 'a', x: 0, y: 0, w: 2, h: 2, static: true },
@@ -60,9 +58,4 @@ class DashboardGrid extends React.Component {
     );
   }
 }
-
-DashboardGrid.propTypes = {
-  classes: PropTypes.func.isRequired,
-};
-
 export default withStyles(useStyles)(DashboardGrid);

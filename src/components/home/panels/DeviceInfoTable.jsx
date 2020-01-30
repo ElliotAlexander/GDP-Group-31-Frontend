@@ -10,9 +10,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { Typography } from '@material-ui/core';
 
 const columns = [
   { id: 'name', label: 'Device\u00a0Name', minWidth: 170 },
@@ -93,12 +90,11 @@ const DEVICE_LIST_QUERY = gql`
         deviceType
         uuid
       }
-    },
+    }
     allDeviceSecurityRatings {
-        nodes {
-          overall
-          uuid
-        
+      nodes {
+        overall
+        uuid
       }
     }
   }
@@ -111,26 +107,21 @@ export default function DevicesInfoTable() {
   });
 
   const setRating = uuid => {
-    const rating = data.allDeviceSecurityRatings.nodes.filter(x => x.uuid === uuid ).map(y => y.overall);
-    if(rating.length == 0){
-      return "Awaiting data..."; 
+    const rating = data.allDeviceSecurityRatings.nodes
+      .filter(x => x.uuid === uuid)
+      .map(y => y.overall);
+    if (rating.length === 0) {
+      return 'Awaiting data...';
     }
 
     if (rating > 0 && rating < 0.5) {
-      return (
-        <p style={{ color: 'green',  fontWeight: 'bold' }}>Safe</p>
-      );
+      return <p style={{ color: 'green', fontWeight: 'bold' }}>Safe</p>;
     }
 
     if (rating > 0.3 && rating < 0.75) {
-      return (
-        <p style={{ color: 'yellow',  fontWeight: 'bold' }}>Concerning</p>
-      );
+      return <p style={{ color: 'yellow', fontWeight: 'bold' }}>Concerning</p>;
     }
-    return (
-      <p style={{ color: 'red',  fontWeight: 'bold' }}>Critical</p>
-
-    )
+    return <p style={{ color: 'red', fontWeight: 'bold' }}>Critical</p>;
   };
 
   if (loading)
@@ -169,9 +160,7 @@ export default function DevicesInfoTable() {
                       : device.deviceNickname}
                   </StyledTableCell>
                   <StyledTableCell>{device.internalIpV4}</StyledTableCell>
-                  <StyledTableCell>
-                      {setRating(device.uuid)}
-                  </StyledTableCell>
+                  <StyledTableCell>{setRating(device.uuid)}</StyledTableCell>
                   <StyledTableCell>{device.deviceType}</StyledTableCell>
                 </TableRow>
               ))}

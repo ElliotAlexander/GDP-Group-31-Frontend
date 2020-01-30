@@ -76,16 +76,16 @@ export default function ListElement(props) {
   const classes = useStyles();
 
   const generatePadding = () => {
-    if(ratingObj.overall < 0.5 ){
+    if (ratingObj.overall < 0.5) {
       return '10px solid green';
     }
 
-    if(ratingObj.overall < 0.9 && ratingObj.overall >= 0.5) {
+    if (ratingObj.overall < 0.9 && ratingObj.overall >= 0.5) {
       return '10px solid yellow';
     }
 
     return '10px solid red';
-  }
+  };
 
   const checkDeviceStatus = () => {
     if (
@@ -116,7 +116,7 @@ export default function ListElement(props) {
         button
         key={device.devices.deviceHostname}
         className={classes.listElement}
-        style={{ borderLeft: generatePadding()}}
+        style={{ borderLeft: generatePadding() }}
         onClick={action}
       >
         <div className={classes.elementRoot}>
@@ -161,4 +161,7 @@ ListElement.propTypes = {
   drawerWidth: PropTypes.number,
   device: PropTypes.shape({}),
   action: PropTypes.func,
+  rating: PropTypes.shape({
+    length: PropTypes.number,
+  }),
 };

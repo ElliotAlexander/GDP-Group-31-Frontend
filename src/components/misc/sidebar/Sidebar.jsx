@@ -395,7 +395,9 @@ function Sidebar(props) {
                   <ListElement
                     drawerWidth={drawerWidth}
                     devices={deviceMap}
-                    rating={data.allDeviceSecurityRatings.nodes.filter(x => x.uuid === deviceMap.uuid)}
+                    rating={data.allDeviceSecurityRatings.nodes.filter(
+                      x => x.uuid === deviceMap.uuid,
+                    )}
                     action={() => {
                       dispatch(setDevice(deviceMap));
                     }}
