@@ -56,7 +56,6 @@ function ErrorPage() {
                 <Typography
                   component="h1"
                   variant="h1"
-                  color="white"
                   align="center"
                   noWrap
                   paragraph
@@ -65,12 +64,7 @@ function ErrorPage() {
                   Uh Oh
                 </Typography>
 
-                <Typography
-                  component="h5"
-                  variant="h6"
-                  color="white"
-                  align="center"
-                >
+                <Typography component="h5" variant="h6" align="center">
                   Looks like something went wrong! We&apos;re working on getting
                   this fixed, but in the meantime click below to head back to
                   the main page.

@@ -77,8 +77,8 @@ const DEVICE_LIST_QUERY = gql`
       lastSeen
       macAddr
       currentlyActive
-    },
-    allDeviceSecurityRatings(condition: {uuid: $uuid}) {
+    }
+    allDeviceSecurityRatings(condition: { uuid: $uuid }) {
       edges {
         node {
           overall
@@ -114,8 +114,8 @@ function DevicesInfoTable(props) {
   const lastSeenInMilliSeconds = Date.parse(data.deviceByUuid.lastSeen);
   const lastSeen = new Date(lastSeenInMilliSeconds);
 
-  const generateRating = (rating) => {
-    if(rating === undefined || rating === ''){
+  const generateRating = rating => {
+    if (rating === undefined || rating === '') {
       return 'No data';
     }
     if (rating <= 0.5) {
@@ -127,7 +127,6 @@ function DevicesInfoTable(props) {
     }
     return 'Critical';
   };
-
 
   return (
     <Paper>
@@ -151,14 +150,38 @@ function DevicesInfoTable(props) {
                 <StyledTableHeadCell>MAC Address</StyledTableHeadCell>
                 <StyledTableCell>{data.deviceByUuid.macAddr}</StyledTableCell>
               </TableRow>
-              <TableRow>
-                <StyledTableHeadCell>Rating (0-1)</StyledTableHeadCell>
-                <StyledTableCell>{Math.round((parseFloat(data.allDeviceSecurityRatings.edges[0].node.overall) + Number.EPSILON) * 100) / 100}</StyledTableCell>
-              </TableRow>
-              <TableRow>
-                <StyledTableHeadCell>Rating (Overall)</StyledTableHeadCell>
-                <StyledTableCell>{generateRating(parseFloat(data.allDeviceSecurityRatings.edges[0].node.overall))}</StyledTableCell>
-              </TableRow>
+              {data.allDeviceSecurityRatings.edges.length !== 0 ? (
+                <TableRow>
+                  <StyledTableHeadCell>Rating (0-1)</StyledTableHeadCell>
+                  <StyledTableCell>
+                    {Math.round(
+                      (parseFloat(
+                        data.allDeviceSecurityRatings.edges[0].node.overall,
+                      ) +
+                        Number.EPSILON) *
+                        100,
+                    ) / 100}
+                  </StyledTableCell>
+                </TableRow>
+              ) : (
+                <div />
+              )}
+
+              {data.allDeviceSecurityRatings.edges.length !== 0 ? (
+                <TableRow>
+                  <StyledTableHeadCell>Rating (Overall)</StyledTableHeadCell>
+                  <StyledTableCell>
+                    {generateRating(
+                      parseFloat(
+                        data.allDeviceSecurityRatings.edges[0].node.overall,
+                      ),
+                    )}
+                  </StyledTableCell>
+                </TableRow>
+              ) : (
+                <div></div>
+              )}
+
               <TableRow>
                 <StyledTableHeadCell>Device Type</StyledTableHeadCell>
                 <StyledTableCell>

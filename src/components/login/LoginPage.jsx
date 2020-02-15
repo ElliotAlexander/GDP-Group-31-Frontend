@@ -106,14 +106,7 @@ class LoginPage extends React.Component {
     const { username, password } = this.state;
     // eslint-disable-next-line react/destructuring-assignment
     this.props.login(username, password).then(
-      res => {
-        if (res === undefined) {
-          this.setState({
-            open: true,
-            loginMessage: 'Login failed.',
-          });
-        }
-      },
+      res => {},
       () => {
         this.setState({
           open: true,

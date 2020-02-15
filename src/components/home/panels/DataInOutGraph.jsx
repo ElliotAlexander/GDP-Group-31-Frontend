@@ -54,6 +54,14 @@ function DataInOutGraph() {
       </p>
     );
 
+  if (data.allDeviceDataSumOverTimes.edges.length === 0) {
+    return (
+      <Paper style={{ height: '100%', padding: '10px', textAlign: 'center' }}>
+        <h1>No Data</h1>
+      </Paper>
+    );
+  }
+
   const timestamps = [];
   const dataPointsDataTransferred = [];
   for (let i = 0; i < data.allDeviceDataSumOverTimes.edges.length; i += 1) {
