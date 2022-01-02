@@ -30,3 +30,6 @@ package-lock.json
 # Editor/IDE
 .idea
 packages/api/etc/
+
+# no .iml files
+*.iml
